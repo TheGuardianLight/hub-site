@@ -10,7 +10,8 @@ $config = [
     'projectId' => $_ENV['PROJECT_ID'],
     'storageBucket' => $_ENV['STORAGE_BUCKET'],
     'messagingSenderId' => $_ENV['MESSAGING_SENDER_ID'],
-    'appId' => $_ENV['APP_ID']
+    'appId' => $_ENV['APP_ID'],
+    'allowSignup' => filter_var($_ENV['ALLOW_SIGNUP'], FILTER_VALIDATE_BOOLEAN)
 ];
 ?>
 
@@ -37,7 +38,9 @@ $config = [
         <input class="form-control my-2" id="email" placeholder="Email" type="email">
         <input class="form-control my-2" id="password" placeholder="Mot de passe" type="password">
         <button class="btn btn-primary" id="login-btn">Se connecter</button>
-        <button class="btn btn-secondary" id="signup-btn">S'inscrire</button>
+        <?php if ($config['allowSignup']): ?>
+            <button class="btn btn-secondary" id="signup-btn">S'inscrire</button>
+        <?php endif; ?>
     </div>
 
     <div id="hub-container" class="d-none">
