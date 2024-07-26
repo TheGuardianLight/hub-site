@@ -1,9 +1,12 @@
 <?php
+require 'vendor/autoload.php';
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Lire le fichier JSON
 $jsonData = file_get_contents('config.json');
 $data = json_decode($jsonData, true);
-$category = $data['categories'];
-$cards = $category['cards'];
 
 if (!function_exists('check_http_status')) {
     function check_http_status($url) {
@@ -28,19 +31,20 @@ if (!function_exists('check_http_status')) {
     }
 }
 
-// Exemple d'utilisation
-foreach ($cards as $card) {
-    $url = $card['url'];
-    $http_code = check_http_status($url);
+// Vérifier le statut HTTP de chaque URL
+foreach ($data['categories'] as $categoryKey => $category) {
+    foreach ($category['cards'] as $cardKey => $card) {
+        $url = $card['url'];
+        $http_code = check_http_status($url);
 
-    if ($http_code == 200) {
-        echo "HTTP 200: OK";
-    } elseif ($http_code == 404) {
-        echo "HTTP 404: Not Found";
-    } elseif ($http_code == 503) {
-        echo "HTTP 503: Service Unavailable";
-    } else {
-        echo "HTTP $http_code: Other status";
+        if ($http_code == 200) {
+            $data['categories'][$categoryKey]['cards'][$cardKey]['siteStatus'] = 'En ligne';
+        } else {
+            $data['categories'][$categoryKey]['cards'][$cardKey]['siteStatus'] = 'Indisponible';
+        }
     }
 }
+
+// Écrire les données mises à jour dans le fichier config.json
+file_put_contents('config.json', json_encode($data));
 ?>

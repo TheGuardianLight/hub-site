@@ -1,5 +1,8 @@
 <?php
+session_start();
+
 require 'vendor/autoload.php';
+require 'check_status.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -17,6 +20,19 @@ $config = [
 // Lire le fichier JSON
 $jsonData = file_get_contents('config.json');
 $data = json_decode($jsonData, true);
+
+// Vérifier si l'utilisateur est connecté
+$loggedIn = isset($_SESSION['user']);
+
+// Si l'utilisateur n'est pas connecté et qu'il essaie de se connecter, vérifier ses identifiants
+if (!$loggedIn && isset($_POST['email']) && isset($_POST['password'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Ici, vérifiez les identifiants de l'utilisateur (par exemple, avec une base de données)
+    // Si les identifiants sont corrects, définissez $_SESSION['user'] pour garder l'utilisateur connecté
+    // $loggedIn = true;
+}
 ?>
 
 <!DOCTYPE html>
@@ -102,8 +118,8 @@ $data = json_decode($jsonData, true);
         const password = passwordInput.value;
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
-                loginContainer.classList.add('d-none');
-                hubContainer.classList.remove('d-none');
+                // L'utilisateur est connecté, recharger la page pour mettre à jour l'état de la session PHP
+                location.reload();
             })
             .catch((error) => {
                 console.error('Erreur de connexion:', error);
@@ -116,13 +132,20 @@ $data = json_decode($jsonData, true);
         const password = passwordInput.value;
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
-                loginContainer.classList.add('d-none');
-                hubContainer.classList.remove('d-none');
+                // L'utilisateur est inscrit, recharger la page pour mettre à jour l'état de la session PHP
+                location.reload();
             })
             .catch((error) => {
                 console.error('Erreur d\'inscription:', error);
             });
     });
+
+    // Vérifier si l'utilisateur est connecté
+    <?php if ($loggedIn): ?>
+    // L'utilisateur est connecté, afficher le conteneur du hub
+    loginContainer.classList.add('d-none');
+    hubContainer.classList.remove('d-none');
+    <?php endif; ?>
 </script>
 
 </body>
