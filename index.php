@@ -13,6 +13,10 @@ $config = [
     'appId' => $_ENV['APP_ID'],
     'allowSignup' => filter_var($_ENV['ALLOW_SIGNUP'], FILTER_VALIDATE_BOOLEAN)
 ];
+
+// Lire le fichier JSON
+$jsonData = file_get_contents('config.json');
+$data = json_decode($jsonData, true);
 ?>
 
 <!DOCTYPE html>
@@ -43,156 +47,27 @@ $config = [
         <?php endif; ?>
     </div>
 
-    <div id="hub-container" class="d-none">
-        <h3>Mes sites internet&nbsp;:</h3>
-        <br/>
-        <div class="row">
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://noaledet.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Noaledet <span class="badge bg-success">En ligne</span></h5>
-                            <p class="card-text">Il s'agit de mon CV en ligne.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://characters.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Neodraco's Characters <span class="badge bg-success">En ligne</span>
-                            </h5>
-                            <p class="card-text">Site où sont hébergé toutes les fiches de mes personnages.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://docs.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Neodraco's Docs <span class="badge bg-success">En ligne</span>
-                            </h5>
-                            <p class="card-text">Gestion de la documentation technique.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://roleplay.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Neodraco's Roleplay <span class="badge bg-danger">Indisponible</span>
-                            </h5>
-                            <p class="card-text">Hébergement de l'historique de mes Roleplay.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <br/>
 
-        <h3>Logiciel de gestion&nbsp;:</h3>
+    <div id="hub-container">
+        <?php foreach ($data['categories'] as $category): ?>
+        <h3><?php echo $category['name']; ?></h3>
         <br/>
-        <div class="row">
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://prox.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Proxmox VE <span class="badge bg-info">Non géré</span></h5>
-                            <p class="card-text">Hyperviseur Proxmox. Hébergé chez OVH.</p>
-                        </div>
+            <div class="row d-none">
+                <?php foreach ($category['cards'] as $card): ?>
+                <?php if ($card['siteStatus'] == 'En ligne') { $tagClass = 'bg-success'; } elseif ($card['siteStatus'] == 'Indisponible') { $tagClass = 'bg-danger';}; ?>
+                    <div class="col-md-4">
+                        <a class="text-decoration-none text-dark" href="<?php echo $card['url']; ?>">
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $card['siteTitle']; ?> | <span class="badge <?php echo $tagClass ?>"><?php echo $card['siteStatus']; ?></span></h5>
+                                    <p class="card-text"><?php echo $card['siteDescription']; ?></p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                <?php endforeach; ?>
             </div>
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://mngt.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Nagios <span class="badge bg-success">En ligne</span></h5>
-                            <p class="card-text">Système de supervision de mes serveurs virtualisé.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://dcim.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Neodraco's DCIM <span class="badge bg-success">En ligne</span></h5>
-                            <p class="card-text">Logiciel de gestion d'infrastructure IPAM et DCIM.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://dock.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Neodraco's Docker <span class="badge bg-success">En ligne</span></h5>
-                            <p class="card-text">Gestion des conteneurs docker.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://orchinventor.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Orchinventor <span class="badge bg-success">En ligne</span></h5>
-                            <p class="card-text">ERP pour l'Harmonie de Waldhambach.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <br/>
-
-        <h3>Autres services&nbsp;:</h3>
-        <br/>
-        <div class="row">
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://kanban.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Kanban <span class="badge bg-success">En ligne</span></h5>
-                            <p class="card-text">Logiciel de gestion de projet.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://joplin.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Joplin <span class="badge bg-success">En ligne</span></h5>
-                            <p class="card-text">Serveur de stockage de note, tâches, etc...</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://dcim.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Wallos <span class="badge bg-success">En ligne</span></h5>
-                            <p class="card-text">Logiciel de suivis d'abonnement.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a class="text-decoration-none text-dark" href="https://vault.neodraco.fr">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Vaultwarden <span class="badge bg-success">En ligne</span></h5>
-                            <p class="card-text">Gestionnaire de mot de passe basé sur Bitwarden.</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
 </main>
 <footer class="bg-dark text-white text-center py-3">
