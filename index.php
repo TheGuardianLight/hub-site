@@ -112,6 +112,7 @@ $data = json_decode($jsonData, true);
                 });
         });
 
+        <?php if ($config['allowSignup'] == "true"): ?>
         // Fonction d'inscription
         signupBtn.addEventListener('click', () => {
             const email = emailInput.value;
@@ -125,6 +126,7 @@ $data = json_decode($jsonData, true);
                     console.error('Erreur d\'inscription:', error);
                 });
         });
+        <?php endif ?>
 
         // Vérifier si l'utilisateur est connecté
         firebase.auth().onAuthStateChanged((user) => {
