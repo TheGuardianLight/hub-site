@@ -35,8 +35,8 @@ $config = [
 <main class="container my-5">
     <div class="text-center" id="login-container">
         <h2>Connexion</h2>
-        <input class="form-control my-2" id="email" placeholder="Email" type="email">
-        <input class="form-control my-2" id="password" placeholder="Mot de passe" type="password">
+        <label for="email"></label><input class="form-control my-2" id="email" placeholder="Email" type="email">
+        <label for="password"></label><input class="form-control my-2" id="password" placeholder="Mot de passe" type="password">
         <button class="btn btn-primary" id="login-btn">Se connecter</button>
         <?php if ($config['allowSignup']): ?>
             <button class="btn btn-secondary" id="signup-btn">S'inscrire</button>
