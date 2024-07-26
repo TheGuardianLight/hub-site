@@ -15,7 +15,7 @@
     <h1>Bienvenue sur mon Hub</h1>
 </header>
 <main class="container my-5">
-    <div class="text-center d-none" id="login-container">
+    <div class="text-center" id="login-container">
         <h2>Connexion</h2>
         <input class="form-control my-2" id="email" placeholder="Email" type="email">
         <input class="form-control my-2" id="password" placeholder="Mot de passe" type="password">
@@ -23,7 +23,7 @@
         <button class="btn btn-secondary" id="signup-btn">S'inscrire</button>
     </div>
 
-    <div id="hub-container" class="">
+    <div id="hub-container" class="d-none">
         <h3>Mes sites internet&nbsp;:</h3>
         <br/>
         <div class="row">
@@ -186,10 +186,37 @@
 </footer>
 <script crossorigin="anonymous"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js">
+</script>
 <script crossorigin="anonymous"
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js">
+</script>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyCcYcX-Z8DaqCVzI38HTe3omASFh4j6U40",
+        authDomain: "neodraco-s-hub.firebaseapp.com",
+        projectId: "neodraco-s-hub",
+        storageBucket: "neodraco-s-hub.appspot.com",
+        messagingSenderId: "280931848953",
+        appId: "1:280931848953:web:1353862a76f3a3f0030828",
+        measurementId: "G-J55FYDWZZL"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+</script>
+
 
 <script>
     // Récupérer la configuration Firebase depuis l'API PHP
