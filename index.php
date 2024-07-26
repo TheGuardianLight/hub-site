@@ -1,8 +1,8 @@
 <?php
-//require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
-//$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-//$dotenv->load();
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 $config = [
     'apiKey' => $_ENV['API_KEY'],
