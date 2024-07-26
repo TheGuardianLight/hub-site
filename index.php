@@ -1,8 +1,8 @@
 <?php
-require 'vendor/autoload.php';
+//require 'vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+//$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+//$dotenv->load();
 
 $config = [
     'apiKey' => $_ENV['API_KEY'],
@@ -51,7 +51,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://noaledet.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Noaledet <span class="badge bg-primary">Wordpress</span></h5>
+                            <h5 class="card-title">Noaledet <span class="badge bg-success">En ligne</span></h5>
                             <p class="card-text">Il s'agit de mon CV en ligne.</p>
                         </div>
                     </div>
@@ -61,7 +61,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://characters.neodraco.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Neodraco's Characters <span class="badge bg-primary">WordPress</span>
+                            <h5 class="card-title">Neodraco's Characters <span class="badge bg-success">En ligne</span>
                             </h5>
                             <p class="card-text">Site où sont hébergé toutes les fiches de mes personnages.</p>
                         </div>
@@ -72,7 +72,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://docs.neodraco.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Neodraco's Docs <span class="badge bg-primary">Bookstack</span>
+                            <h5 class="card-title">Neodraco's Docs <span class="badge bg-success">En ligne</span>
                             </h5>
                             <p class="card-text">Gestion de la documentation technique.</p>
                         </div>
@@ -100,8 +100,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://prox.neodraco.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Proxmox VE <span class="badge bg-primary">Proxmox</span> <span
-                                    class="badge bg-primary">OVH</span></h5>
+                            <h5 class="card-title">Proxmox VE <span class="badge bg-info">Non géré</span></h5>
                             <p class="card-text">Hyperviseur Proxmox. Hébergé chez OVH.</p>
                         </div>
                     </div>
@@ -111,7 +110,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://mngt.neodraco.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Nagios <span class="badge bg-primary">Nagios XI</span></h5>
+                            <h5 class="card-title">Nagios <span class="badge bg-success">En ligne</span></h5>
                             <p class="card-text">Système de supervision de mes serveurs virtualisé.</p>
                         </div>
                     </div>
@@ -121,7 +120,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://dcim.neodraco.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Neodraco's DCIM <span class="badge bg-primary">Netbox</span></h5>
+                            <h5 class="card-title">Neodraco's DCIM <span class="badge bg-success">En ligne</span></h5>
                             <p class="card-text">Logiciel de gestion d'infrastructure IPAM et DCIM.</p>
                         </div>
                     </div>
@@ -131,8 +130,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://dock.neodraco.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Neodraco's Docker <span class="badge bg-primary">Portainer</span>
-                                <span class="badge bg-primary">Docker</span></h5>
+                            <h5 class="card-title">Neodraco's Docker <span class="badge bg-success">En ligne</span></h5>
                             <p class="card-text">Gestion des conteneurs docker.</p>
                         </div>
                     </div>
@@ -142,7 +140,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://orchinventor.neodraco.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Orchinventor <span class="badge bg-primary">Dolibarr</span></h5>
+                            <h5 class="card-title">Orchinventor <span class="badge bg-success">En ligne</span></h5>
                             <p class="card-text">ERP pour l'Harmonie de Waldhambach.</p>
                         </div>
                     </div>
@@ -158,8 +156,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://kanban.neodraco.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Kanban <span class="badge bg-primary">Taiga</span> <span
-                                    class="badge bg-primary">Docker</span></h5>
+                            <h5 class="card-title">Kanban <span class="badge bg-success">En ligne</span></h5>
                             <p class="card-text">Logiciel de gestion de projet.</p>
                         </div>
                     </div>
@@ -169,8 +166,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://joplin.neodraco.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Joplin <span class="badge bg-primary">Joplin</span> <span
-                                    class="badge bg-primary">Docker</span></h5>
+                            <h5 class="card-title">Joplin <span class="badge bg-success">En ligne</span></h5>
                             <p class="card-text">Serveur de stockage de note, tâches, etc...</p>
                         </div>
                     </div>
@@ -180,8 +176,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://dcim.neodraco.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Wallos <span class="badge bg-primary">Wallos</span> <span
-                                    class="badge bg-primary">Docker</span></h5>
+                            <h5 class="card-title">Wallos <span class="badge bg-success">En ligne</span></h5>
                             <p class="card-text">Logiciel de suivis d'abonnement.</p>
                         </div>
                     </div>
@@ -191,8 +186,7 @@ $config = [
                 <a class="text-decoration-none text-dark" href="https://vault.neodraco.fr">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">Vaultwarden <span class="badge bg-primary">Vaultwarden</span> <span
-                                    class="badge bg-primary">Docker</span></h5>
+                            <h5 class="card-title">Vaultwarden <span class="badge bg-success">En ligne</span></h5>
                             <p class="card-text">Gestionnaire de mot de passe basé sur Bitwarden.</p>
                         </div>
                     </div>
