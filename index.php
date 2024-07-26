@@ -50,6 +50,7 @@ $data = json_decode($jsonData, true);
 
     <div id="hub-container" class="d-none">
         <?php foreach ($data['categories'] as $category): ?>
+        <hr/>
         <h3><?php echo $category['name']; ?></h3>
         <br/>
             <div class="row card-container">
