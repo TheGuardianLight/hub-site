@@ -1,8 +1,8 @@
 <?php
-require 'vendor/autoload.php';
+//require 'vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+//$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+//$dotenv->load();
 
 $config = [
     'apiKey' => $_ENV['API_KEY'],
@@ -48,8 +48,9 @@ $data = json_decode($jsonData, true);
     </div>
 
 
-    <div id="hub-container" class="d-none">
+    <div id="hub-container" class="">
         <?php foreach ($data['categories'] as $category): ?>
+        <?php require 'test.php'?>
         <hr/>
         <h3><?php echo $category['name']; ?></h3>
         <br/>
@@ -62,6 +63,7 @@ $data = json_decode($jsonData, true);
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $card['siteTitle']; ?> | <span class="badge <?php echo $tagClass ?>"><?php echo $card['siteStatus']; ?></span></h5>
                                     <p class="card-text"><?php echo $card['siteDescription']; ?></p>
+                                    <p class="card-text"><?php echo $http_code ?></p>
                                 </div>
                             </div>
                         </a>

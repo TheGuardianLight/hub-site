@@ -1,4 +1,10 @@
 <?php
+
+$jsonData = file_get_contents('config.json');
+$data = json_decode($jsonData, true);
+$category = $data['categories'];
+$card = $category['cards'];
+
 function check_http_status($url) {
     // Initialiser cURL
     $ch = curl_init($url);
@@ -21,13 +27,15 @@ function check_http_status($url) {
 }
 
 // Exemple d'utilisation
-$url = "https://roleplay.neodraco.fr";
+$url = $card['url'];
 $http_code = check_http_status($url);
 
 if ($http_code == 200) {
     echo "HTTP 200: OK";
-} elseif ($http_code == 201) {
-    echo "HTTP 201: Created";
+} elseif ($http_code == 404) {
+    echo "HTTP 404: Not Found";
+} elseif ($http_code == 503) {
+    echo "HTTP 503: Service Unavailable";
 } else {
     echo "HTTP $http_code: Other status";
 }
