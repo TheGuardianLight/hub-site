@@ -19,7 +19,7 @@ footer {
 
 .card {
     cursor: pointer;
-    min-height: 100%;
+    min-height: 85%;
 }
 
 .card-container {
