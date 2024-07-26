@@ -237,7 +237,7 @@
             });
     });
 </script>
-
+<?php echo $apiKey ?>
 
 </body>
 
