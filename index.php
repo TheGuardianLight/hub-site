@@ -52,7 +52,7 @@ $data = json_decode($jsonData, true);
         <?php foreach ($data['categories'] as $category): ?>
         <h3><?php echo $category['name']; ?></h3>
         <br/>
-            <div class="row">
+            <div class="row card-container">
                 <?php foreach ($category['cards'] as $card): ?>
                 <?php if ($card['siteStatus'] == 'En ligne') { $tagClass = 'bg-success'; } elseif ($card['siteStatus'] == 'Indisponible') { $tagClass = 'bg-danger';}; ?>
                     <div class="col-md-4">

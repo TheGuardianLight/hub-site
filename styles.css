@@ -19,4 +19,10 @@ footer {
 
 .card {
     cursor: pointer;
+    min-height: 100%;
+}
+
+.card-container {
+    display: flex;
+    align-items: stretch;
 }
