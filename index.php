@@ -11,6 +11,26 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
 </head>
 <body>
+
+<?php
+require 'vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$config = [
+    'apiKey' => $_ENV['API_KEY'],
+    'authDomain' => $_ENV['AUTH_DOMAIN'],
+    'projectId' => $_ENV['PROJECT_ID'],
+    'storageBucket' => $_ENV['STORAGE_BUCKET'],
+    'messagingSenderId' => $_ENV['MESSAGING_SENDER_ID'],
+    'appId' => $_ENV['APP_ID']
+];
+
+header('Content-Type: application/json');
+echo json_encode($config);
+?>;
+
 <header class="bg-dark text-white text-center py-3">
     <h1>Bienvenue sur mon Hub</h1>
 </header>
