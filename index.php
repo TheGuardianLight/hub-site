@@ -64,7 +64,7 @@ if (!$loggedIn && isset($_POST['email']) && isset($_POST['password'])) {
     </div>
 
 
-    <div id="hub-container" class="">
+    <div id="hub-container" class="d-none">
         <?php foreach ($data['categories'] as $category): ?>
         <hr/>
         <h3><?php echo $category['name']; ?></h3>
