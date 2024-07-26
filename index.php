@@ -48,11 +48,11 @@ $data = json_decode($jsonData, true);
     </div>
 
 
-    <div id="hub-container">
+    <div id="hub-container d-none">
         <?php foreach ($data['categories'] as $category): ?>
         <h3><?php echo $category['name']; ?></h3>
         <br/>
-            <div class="row d-none">
+            <div class="row">
                 <?php foreach ($category['cards'] as $card): ?>
                 <?php if ($card['siteStatus'] == 'En ligne') { $tagClass = 'bg-success'; } elseif ($card['siteStatus'] == 'Indisponible') { $tagClass = 'bg-danger';}; ?>
                     <div class="col-md-4">
