@@ -48,7 +48,7 @@ $data = json_decode($jsonData, true);
     </div>
 
 
-    <div id="hub-container d-none">
+    <div id="hub-container" class="d-none">
         <?php foreach ($data['categories'] as $category): ?>
         <h3><?php echo $category['name']; ?></h3>
         <br/>
