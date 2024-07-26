@@ -18,19 +18,6 @@ $config = [
 // Lire le fichier JSON
 $jsonData = file_get_contents('config.json');
 $data = json_decode($jsonData, true);
-
-// Vérifier si l'utilisateur est connecté
-$loggedIn = isset($_COOKIE['user']);
-
-// Si l'utilisateur n'est pas connecté et qu'il essaie de se connecter, vérifier ses identifiants
-if (!$loggedIn && isset($_POST['email']) && isset($_POST['password'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Ici, vérifiez les identifiants de l'utilisateur (par exemple, avec une base de données)
-    // Si les identifiants sont corrects, définissez $_COOKIE['user'] pour garder l'utilisateur connecté
-    // $loggedIn = true;
-}
 ?>
 
 <!DOCTYPE html>
@@ -139,11 +126,17 @@ if (!$loggedIn && isset($_POST['email']) && isset($_POST['password'])) {
     });
 
     // Vérifier si l'utilisateur est connecté
-    <?php if ($loggedIn): ?>
-    // L'utilisateur est connecté, afficher le conteneur du hub
-    loginContainer.classList.add('d-none');
-    hubContainer.classList.remove('d-none');
-    <?php endif; ?>
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            // L'utilisateur est connecté, afficher le conteneur du hub
+            loginContainer.classList.add('d-none');
+            hubContainer.classList.remove('d-none');
+        } else {
+            // L'utilisateur n'est pas connecté, afficher le conteneur de connexion
+            loginContainer.classList.remove('d-none');
+            hubContainer.classList.add('d-none');
+        }
+    });
 </script>
 
 </body>
