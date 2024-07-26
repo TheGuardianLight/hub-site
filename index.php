@@ -43,7 +43,7 @@ $data = json_decode($jsonData, true);
         <label for="email"></label><input class="form-control my-2" id="email" placeholder="Email" type="email">
         <label for="password"></label><input class="form-control my-2" id="password" placeholder="Mot de passe" type="password">
         <button class="btn btn-primary" id="login-btn">Se connecter</button>
-        <?php if ($config['allowSignup'] = "true"): ?>
+        <?php if ($config['allowSignup'] == "true"): ?>
             <button class="btn btn-secondary" id="signup-btn">S'inscrire</button>
         <?php endif; ?>
     </div>
