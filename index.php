@@ -27,7 +27,6 @@ $config = [
     'appId' => $_ENV['APP_ID']
 ];
 
-header('Content-Type: application/json');
 echo json_encode($config);
 ?>;
 
