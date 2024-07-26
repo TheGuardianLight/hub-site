@@ -193,31 +193,6 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js">
 </script>
 
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-        apiKey: "AIzaSyCcYcX-Z8DaqCVzI38HTe3omASFh4j6U40",
-        authDomain: "neodraco-s-hub.firebaseapp.com",
-        projectId: "neodraco-s-hub",
-        storageBucket: "neodraco-s-hub.appspot.com",
-        messagingSenderId: "280931848953",
-        appId: "1:280931848953:web:1353862a76f3a3f0030828",
-        measurementId: "G-J55FYDWZZL"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-</script>
-
-
 <script>
     // Récupérer la configuration Firebase depuis l'API PHP
     fetch('config.php')
