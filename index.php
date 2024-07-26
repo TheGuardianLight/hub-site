@@ -212,7 +212,7 @@ $config = [
 
 <script>
     // Récupérer la configuration Firebase depuis l'API PHP
-    var config = <?php echo json_encode($config)?>
+    var config = <?php echo json_encode($config); ?>;
     firebase.initializeApp(config);
 
     // Références aux éléments HTML
