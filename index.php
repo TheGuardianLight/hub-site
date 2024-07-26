@@ -1,3 +1,19 @@
+<?php
+require 'vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$config = [
+    'apiKey' => $_ENV['API_KEY'],
+    'authDomain' => $_ENV['AUTH_DOMAIN'],
+    'projectId' => $_ENV['PROJECT_ID'],
+    'storageBucket' => $_ENV['STORAGE_BUCKET'],
+    'messagingSenderId' => $_ENV['MESSAGING_SENDER_ID'],
+    'appId' => $_ENV['APP_ID']
+];
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -196,11 +212,8 @@
 
 <script>
     // Récupérer la configuration Firebase depuis l'API PHP
-    fetch('config.php')
-        .then(response => response.json())
-        .then(config => {
-            firebase.initializeApp(config);
-        });
+    var config = <?php echo json_encode($config)?>
+    firebase.initializeApp(config);
 
     // Références aux éléments HTML
     const loginContainer = document.getElementById('login-container');
