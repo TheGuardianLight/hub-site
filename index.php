@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require 'vendor/autoload.php';
 require 'check_status.php';
 
@@ -22,7 +20,7 @@ $jsonData = file_get_contents('config.json');
 $data = json_decode($jsonData, true);
 
 // Vérifier si l'utilisateur est connecté
-$loggedIn = isset($_SESSION['user']);
+$loggedIn = isset($_COOKIE['user']);
 
 // Si l'utilisateur n'est pas connecté et qu'il essaie de se connecter, vérifier ses identifiants
 if (!$loggedIn && isset($_POST['email']) && isset($_POST['password'])) {
@@ -30,7 +28,7 @@ if (!$loggedIn && isset($_POST['email']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     // Ici, vérifiez les identifiants de l'utilisateur (par exemple, avec une base de données)
-    // Si les identifiants sont corrects, définissez $_SESSION['user'] pour garder l'utilisateur connecté
+    // Si les identifiants sont corrects, définissez $_COOKIE['user'] pour garder l'utilisateur connecté
     // $loggedIn = true;
 }
 ?>
