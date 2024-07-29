@@ -8,7 +8,15 @@
     <title>Installation</title>
 </head>
 <body>
-<div class="container mt-3">
+
+<div id="install-alert" class="alert alert-danger d-none" role="alert">
+    <h1 class="text-center">Installation non autorisée !</h1>
+    <p class="text-center">Présence du fichier <code>install.lock</code> détecté !</p>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<div id="install-form" class="container mt-3">
     <h1 class="text-center">Configuration de la base de données</h1>
 
     <form id="database-config-form">
@@ -39,6 +47,31 @@
     <div id="error-message" class="alert alert-danger d-none mt-3"></div>
     <div id="success-message" class="alert alert-success d-none mt-3"></div>
 </div>
+
+<script type="text/javascript">
+    const installForm = document.getElementById('install-form');
+    const installAlerte = document.getElementById('install-alert');
+
+    $(document).ready(function() {
+        // Effectue une requête AJAX pour vérifier si le fichier "install.lock" existe
+        $.ajax({
+            url: 'install.lock',
+            type: 'HEAD',
+            error: function()
+            {
+                // Le fichier "install.lock" n'existe pas, affiche 'installateur'
+                installForm.classList.remove('d-none');
+                installAlerte.classList.add('d-none');
+            },
+            success: function()
+            {
+                // Le fichier "install.lock" existe, affiche 'Installation non autorisée !'
+                installForm.classList.add('d-none');
+                installAlerte.classList.remove('d-none');
+            }
+        });
+    });
+</script>
 
 <script>
     document.getElementById('database-config-form').addEventListener('submit', function (event) {
