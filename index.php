@@ -1,23 +1,6 @@
 <?php
 require 'vendor/autoload.php';
-//require 'check_status.php';
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-$config = [
-    'apiKey' => $_ENV['API_KEY'],
-    'authDomain' => $_ENV['AUTH_DOMAIN'],
-    'projectId' => $_ENV['PROJECT_ID'],
-    'storageBucket' => $_ENV['STORAGE_BUCKET'],
-    'messagingSenderId' => $_ENV['MESSAGING_SENDER_ID'],
-    'appId' => $_ENV['APP_ID'],
-    'allowSignup' => $_ENV['ALLOW_SIGNUP']
-];
-
-// Lire le fichier JSON
-$jsonData = file_get_contents('config.json');
-$data = json_decode($jsonData, true);
+require 'php/api_config.php';
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +24,8 @@ $data = json_decode($jsonData, true);
     <div class="text-center" id="login-container">
         <h2>Connexion</h2>
         <label for="email"></label><input class="form-control my-2" id="email" placeholder="Email" type="email">
-        <label for="password"></label><input class="form-control my-2" id="password" placeholder="Mot de passe" type="password">
+        <label for="password"></label><input class="form-control my-2" id="password" placeholder="Mot de passe"
+                                             type="password">
         <button class="btn btn-primary" id="login-btn">Se connecter</button>
         <?php if ($config['allowSignup'] == "true"): ?>
             <button class="btn btn-secondary" id="signup-btn">S'inscrire</button>
@@ -51,17 +35,23 @@ $data = json_decode($jsonData, true);
 
     <div id="hub-container" class="d-none">
         <?php foreach ($data['categories'] as $category): ?>
-        <hr/>
-        <h3><?php echo $category['name']; ?></h3>
-        <br/>
+            <hr/>
+            <h3><?php echo $category['name']; ?></h3>
+            <br/>
             <div class="row card-container">
                 <?php foreach ($category['cards'] as $card): ?>
-                <?php if ($card['siteStatus'] == 'En ligne') { $tagClass = 'bg-success'; } elseif ($card['siteStatus'] == 'Indisponible') { $tagClass = 'bg-danger';}; ?>
+                    <?php if ($card['siteStatus'] == 'En ligne') {
+                        $tagClass = 'bg-success';
+                    } elseif ($card['siteStatus'] == 'Indisponible') {
+                        $tagClass = 'bg-danger';
+                    }; ?>
                     <div class="col-md-4">
                         <a class="text-decoration-none text-dark" href="<?php echo $card['url']; ?>">
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?php echo $card['siteTitle']; ?> | <span class="badge <?php echo $tagClass ?>"><?php echo $card['siteStatus']; ?></span></h5>
+                                    <h5 class="card-title"><?php echo $card['siteTitle']; ?> | <span
+                                                class="badge <?php echo $tagClass ?>"><?php echo $card['siteStatus']; ?></span>
+                                    </h5>
                                     <p class="card-text"><?php echo $card['siteDescription']; ?></p>
                                 </div>
                             </div>
@@ -84,64 +74,9 @@ $data = json_decode($jsonData, true);
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js">
 </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        // Récupérer la configuration Firebase depuis l'API PHP
-        var config = <?php echo json_encode($config); ?>;
-        firebase.initializeApp(config);
-
-        // Références aux éléments HTML
-        const loginContainer = document.getElementById('login-container');
-        const hubContainer = document.getElementById('hub-container');
-        const loginBtn = document.getElementById('login-btn');
-        const signupBtn = document.getElementById('signup-btn');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-
-        // Fonction de connexion
-        loginBtn.addEventListener('click', () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // L'utilisateur est connecté, recharger la page pour mettre à jour l'état de la session PHP
-                    location.reload();
-                })
-                .catch((error) => {
-                    console.error('Erreur de connexion:', error);
-                });
-        });
-
-        <?php if ($config['allowSignup'] == "true"): ?>
-        // Fonction d'inscription
-        signupBtn.addEventListener('click', () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // L'utilisateur est inscrit, recharger la page pour mettre à jour l'état de la session PHP
-                    location.reload();
-                })
-                .catch((error) => {
-                    console.error('Erreur d\'inscription:', error);
-                });
-        });
-        <?php endif ?>
-
-        // Vérifier si l'utilisateur est connecté
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                // L'utilisateur est connecté, afficher le conteneur du hub
-                loginContainer.classList.add('d-none');
-                hubContainer.classList.remove('d-none');
-            } else {
-                // L'utilisateur n'est pas connecté, afficher le conteneur de connexion
-                loginContainer.classList.remove('d-none');
-                hubContainer.classList.add('d-none');
-            }
-        });
-    });
-</script>
+<?php
+require 'php/script_auth.php';
+?>
 
 </body>
 
