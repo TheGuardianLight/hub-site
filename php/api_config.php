@@ -3,18 +3,31 @@
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$config = [
-    'apiKey' => $_ENV['API_KEY'],
-    'authDomain' => $_ENV['AUTH_DOMAIN'],
-    'projectId' => $_ENV['PROJECT_ID'],
-    'storageBucket' => $_ENV['STORAGE_BUCKET'],
-    'messagingSenderId' => $_ENV['MESSAGING_SENDER_ID'],
-    'appId' => $_ENV['APP_ID'],
-    'allowSignup' => $_ENV['ALLOW_SIGNUP']
+$dbConfig = [
+    'host' => $_ENV['DB_HOST'],
+    'port' => $_ENV['DB_PORT'],
+    'dbname' => $_ENV['DB_NAME'],
+    'user' => $_ENV['DB_USER'],
+    'password' => $_ENV['DB_PASSWORD'],
 ];
 
-// Lire le fichier JSON
-$jsonData = file_get_contents('config.json');
-$data = json_decode($jsonData, true);
+$config = [
+    'allowSignup' => $_ENV['ALLOW_SIGNUP'],
+];
+
+// Function to get the database connection
+function getDbConnection($dbConfig) {
+    $dsn = "mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']};port={$dbConfig['port']}";
+    $user = $dbConfig['user'];
+    $password = $dbConfig['password'];
+
+    try {
+        $connection = new PDO($dsn, $user, $password);
+    } catch (PDOException $exception) {
+        echo "Connection failed: " . $exception->getMessage();
+    }
+
+    return $connection;
+}
 
 ?>
