@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="styles.css" rel="stylesheet"/>
+    <title>Installation</title>
+</head>
+<body>
+<div class="container mt-3">
+    <h1 class="text-center">Configuration de la base de données</h1>
+
+    <form id="database-config-form">
+        <div class="mb-3">
+            <label for="dbname" class="form-label">Nom de la base de données</label>
+            <input type="text" class="form-control" id="dbname" required>
+        </div>
+        <div class="mb-3">
+            <label for="dbuser" class="form-label">Nom d'utilisateur</label>
+            <input type="text" class="form-control" id="dbuser" required>
+        </div>
+        <div class="mb-3">
+            <label for="dbpassword" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="dbpassword" required>
+        </div>
+        <div class="mb-3">
+            <label for="dbhost" class="form-label">Hôte de la base de données</label>
+            <input type="text" class="form-control" id="dbhost" required>
+        </div>
+        <div class="mb-3">
+            <label for="dbport" class="form-label">Port</label>
+            <input type="number" class="form-control" id="dbport" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Mettre en place la base de données</button>
+    </form>
+
+    <div id="error-message" class="alert alert-danger d-none mt-3"></div>
+    <div id="success-message" class="alert alert-success d-none mt-3"></div>
+</div>
+
+<script>
+    document.getElementById('database-config-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var dbname = document.getElementById('dbname').value;
+        var dbuser = document.getElementById('dbuser').value;
+        var dbpassword = document.getElementById('dbpassword').value;
+        var dbhost = document.getElementById('dbhost').value;
+        var dbport = document.getElementById('dbport').value;
+
+        var data = new URLSearchParams();
+        data.append('dbname', dbname);
+        data.append('dbuser', dbuser);
+        data.append('dbpassword', dbpassword);
+        data.append('dbhost', dbhost);
+        data.append('dbport', dbport);
+
+        fetch('php/install_sql.php', {
+            method: 'POST',
+            body: data,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erreur HTTP " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('error-message').classList.remove('d-none');
+                    document.getElementById('error-message').textContent = data.error;
+                } else {
+                    document.getElementById('success-message').classList.remove('d-none');
+                    document.getElementById('success-message').textContent = data.success;
+
+                    // Redirige l'utilisateur vers la page login.php
+
+                    setTimeout(function() {
+                        window.location.href = "login.php";
+                    }, 5000);
+                }
+            })
+            .catch(e => {
+                document.getElementById('error-message').classList.remove('d-none');
+                document.getElementById('error-message').textContent = e;
+            });
+    });
+</script>
+</body>
+</html>
