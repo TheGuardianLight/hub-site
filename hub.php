@@ -28,6 +28,26 @@ $data = json_decode($jsonData, true);
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="hub.php">Mon Hub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="gestion.php">Gestion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="account.php">Compte</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <header class="bg-dark text-white text-center py-3">
     <h1>Bienvenue sur mon Hub</h1>
 </header>
