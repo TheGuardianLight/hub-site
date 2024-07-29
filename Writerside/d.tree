@@ -4,7 +4,7 @@
 
 <instance-profile id="d"
                  name="doc"
-                 start-page="starter-topic.md">
+                 start-page="Installation.md">
 
-    <toc-element topic="starter-topic.md"/>
+    <toc-element topic="Installation.md"/>
 </instance-profile>
