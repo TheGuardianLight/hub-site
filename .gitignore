@@ -1,3 +1,5 @@
 /composer.phar
 /.env
 /install.lock
+/qodana.sarif.json
+/qodana.yaml

@@ -101,15 +101,12 @@ if(isset($_POST['register'])) {
                 <div class="d-grid gap-2 mt-3">
                     <button type="submit" class="btn btn-primary" name="register">S'inscrire</button>
                 </div>
-                <?php if(!empty($message)): ?>
-                    <div class="alert alert-<?= $messageType ?>" role="alert"><?= $message ?></div>
-                <?php endif; ?>
             </form>
         </div>
     </div>
 </div>
 <?php if(!empty($message)): ?>
-    <div class="alert alert-<?= $messageType ?>" role="alert"><?= $message ?></div>
+    <div class="alert alert-<?= $messageType ?>" role="alert"><p class="text-center"><?= $message ?></p></div>
 <?php endif; ?>
 </body>
 </html>

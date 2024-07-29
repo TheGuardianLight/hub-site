@@ -30,11 +30,28 @@ try {
             PRIMARY KEY (`username`),
             FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON DELETE CASCADE
         ) ENGINE=InnoDB;
+
+        CREATE TABLE `categorie` (
+            `cat_id` INT NOT NULL AUTO_INCREMENT,
+            `cat_name` VARCHAR(255) NOT NULL,
+            PRIMARY KEY (`cat_id`)
+        ) ENGINE=InnoDB;
+
+        CREATE TABLE `sites` (
+            `site_id` INT NOT NULL AUTO_INCREMENT,
+            `site_title` VARCHAR(255) NOT NULL,
+            `site_tag` VARCHAR(255) NOT NULL,
+            `site_desc` TEXT,
+            `site_url` VARCHAR(255) NOT NULL,
+            `cat_id` INT,
+            PRIMARY KEY (`site_id`),
+            FOREIGN KEY (`cat_id`) REFERENCES `categorie`(`cat_id`) ON DELETE CASCADE
+        ) ENGINE=InnoDB;
     ";
 
     $connection->exec($sql);
 
-    $envPath = __DIR__ . '/.env';
+    $envPath = __DIR__ . '/../.env';
     $env = [];
 
     // Si le fichier .env existe déjà, charge les variables d'environnement actuelles
