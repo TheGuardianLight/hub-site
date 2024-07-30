@@ -84,7 +84,8 @@ while ($row = $resultSites->fetch()) {
                     <h3 class="card-title">Ajouter une catégorie</h3>
                     <form class="mt-3" method="post" action="php/add_cat.php">
                         <div class="mb-3">
-                            <input type="text" class="form-control" name="cat_name" placeholder="Nom de la nouvelle catégorie">
+                            <label for="cat_name" class="form-label">Nom de la catégorie</label>
+                            <input type="text" class="form-control" name="cat_name" id="cat_name" placeholder="Nom de la nouvelle catégorie"/>
                         </div>
                         <button type="submit" class="btn btn-primary">Ajouter une catégorie</button>
                     </form>
@@ -100,6 +101,7 @@ while ($row = $resultSites->fetch()) {
                     <h3 class="card-title">Ajouter un site</h3>
                     <form class="mt-4" method="post" action="php/add_sites.php">
                         <div class="mb-3">
+                            <label for="site_title" class="form-label">Titre de la carte</label>
                             <input type="text" class="form-control" name="site_title" id="site_title" placeholder="Titre du nouveau site">
                         </div>
                         <div class="mb-3">
