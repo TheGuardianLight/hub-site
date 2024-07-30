@@ -95,9 +95,13 @@
             body: params,
         }).then(response => {
             if (!response.ok) {
-                // Non-OK HTTP response, convert the body to text and throw as an error
-                return response.text().then(error => {
-                    throw new Error(error);
+                // Non-OK HTTP response, convert the body to json (instead of text) and throw as an error
+                return response.json().then(errorJson => {
+                    let message = errorJson.error;
+                    if(typeof errorJson.error === "object") {
+                        message = Object.values(errorJson.error).join(" ");
+                    }
+                    throw new Error(message);
                 });
             }
             // OK HTTP response, convert the body to JSON
