@@ -1,4 +1,5 @@
 <?php
+global $dbConfig;
 require 'vendor/autoload.php';
 require 'php/api_config.php';
 
