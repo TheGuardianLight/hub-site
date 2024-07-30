@@ -61,8 +61,7 @@ while ($row = $resultSites->fetch()) {
     <!-- Tabs content -->
     <div class="tab-content" id="adminTabsContent">
         <!-- Catégories tab -->
-        <div class="tab-pane fade" id="categories" role="tabpanel" aria-labelledby="categories-tab">
-            <div class="row">
+        <div class="tab-pane fade" id="categories" role="tabpanel" aria-labelledby="categories-tab">            <div class="row">
                 <?php foreach($categories as $cat_id => $cat_name): ?>
                     <div class="col-md-4">
                         <div class="card mb-4">
@@ -91,6 +90,31 @@ while ($row = $resultSites->fetch()) {
                     </form>
                 </div>
             </div>
+
+            <!-- Ajout d'une section pour modifier une catégorie existant -->
+            <div class="card my-4">
+                <div class="card-body">
+                    <h3 class="card-title">Modifier une catégorie</h3>
+                    <form class="mt-3" method="post" action="php/edit_cat.php">
+                        <!-- Select pour choisir la catégorie à modifier -->
+                        <div class="mb-3">
+                            <label for="edit_cat_id" class="form-label">Choisir la catégorie</label>
+                            <select name="cat_id" id="edit_cat_id" class="form-control">
+                                <?php foreach($categories as $cat_id => $cat_name): ?>
+                                    <option value="<?php echo $cat_id; ?>"><?php echo $cat_name; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <!-- Input pour entrer le nouveau nom -->
+                        <div class="mb-3">
+                            <label for="new_cat_name" class="form-label">Nouveau nom</label>
+                            <input type="text" class="form-control" name="new_cat_name" id="new_cat_name" placeholder="Nouveau nom de la catégorie">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Modifier la catégorie</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
 
         <!-- Sites tab -->
@@ -129,6 +153,46 @@ while ($row = $resultSites->fetch()) {
                 </div>
             </div>
 
+            <!-- Ajout d'une section pour modifier un site existant -->
+            <div class="card my-4">
+                <div class="card-body">
+                    <h3 class="card-title">Modifier un site</h3>
+                    <form id="editSiteForm" class="mt-4" method="post" action="php/edit_sites.php">
+                        <!-- Select pour choisir le site à modifier -->
+                        <div class="mb-3">
+                            <label for="edit_site_id" class="form-label">Choisir le site</label>
+                            <select name="site_id" id="edit_site_id" class="form-control">
+                                <?php foreach($sites as $site): ?>
+                                    <option value="<?php echo $site['site_id']; ?>"><?php echo $site['site_title']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <!-- Inputs pour modifier les infos du site -->
+                        <div class="mb-3">
+                            <label for="new_site_title" class="form-label">Nouveau titre</label>
+                            <input type="text" class="form-control" name="new_site_title" id="new_site_title" placeholder="Nouveau titre du site">
+                        </div>
+                        <div class="mb-3">
+                            <label for="new_site_url" class="form-label">Nouvelle URL</label>
+                            <input type="text" class="form-control" name="new_site_url" id="new_site_url" placeholder="Nouvelle URL du site">
+                        </div>
+                        <div class="mb-3">
+                            <label for="new_site_desc" class="form-label">Nouvelle description</label>
+                            <input type="text" class="form-control" name="new_site_desc" id="new_site_desc" placeholder="Nouvelle description du site">
+                        </div>
+                        <div class="mb-3">
+                            <label for="new_cat_id" class="form-label">Nouvelle catégorie</label>
+                            <select name="cat_id" id="new_cat_id" class="form-control">
+                                <?php foreach($categories as $cat_id => $cat_name): ?>
+                                    <option value="<?php echo $cat_id; ?>"><?php echo $cat_name; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Modifier le site</button>
+                    </form>
+                </div>
+            </div>
+
             <!-- Ajouter une section pour afficher les sites existants -->
             <div class="card my-4">
                 <div class="card-body">
@@ -159,6 +223,28 @@ $conn = null; // fermeture de la connexion à la base de données
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<script>
+    // Initialiser les données des sites
+    var sites = <?php echo json_encode($sites); ?>;
+
+    // Fonction pour mettre à jour les valeurs des champs du formulaire en fonction du site sélectionné
+    function updateFormValues() {
+        var selectedSiteId = document.getElementById("edit_site_id").value;
+        var selectedSite = sites.find(site => +site.site_id === +selectedSiteId);
+
+        document.getElementById("new_site_title").value = selectedSite ? selectedSite.site_title : '';
+        document.getElementById("new_site_url").value = selectedSite ? selectedSite.site_url : '';
+        document.getElementById("new_site_desc").value = selectedSite ? selectedSite.site_desc : '';
+        document.getElementById("new_cat_id").value = selectedSite ? selectedSite.cat_id : '';
+    }
+
+    // Ajouter un écouteur d'événement pour mettre à jour les valeurs du formulaire chaque fois que le site sélectionné change
+    document.getElementById("edit_site_id").addEventListener("change", updateFormValues);
+
+    // Appeler la fonction une fois au chargement de la page pour remplir les valeurs initiales
+    window.onload = updateFormValues;
+</script>
 
 <script>
     // tab switcher function
