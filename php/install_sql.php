@@ -1,4 +1,5 @@
 <?php
+
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\Dotenv\Exception\PathException;
 
@@ -10,7 +11,6 @@ $dbpassword = $_POST["dbpassword"];
 
 $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s', $host, $port, $dbname);
 
-// Crée une connexion PDO
 try {
     $connection = new PDO($dsn, $dbuser, $dbpassword);
     $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -54,38 +54,38 @@ try {
     $envPath = __DIR__ . '/../.env';
     $env = [];
 
-    // Si le fichier .env existe déjà, charge les variables d'environnement actuelles
     if (file_exists($envPath)) {
         try {
             $dotenv = new Dotenv();
             $env = $dotenv->parse(file_get_contents($envPath), $envPath);
         } catch (PathException $exception) {
-            // Gérer l'exception si nécessaire, par exemple en enregistrant une erreur dans un journal
+            // Handle exception if needed, surely log to somewhere
         }
     }
 
-    // Ajoute ou remplace les variables d'environnement avec les nouvelles valeurs
     $env['DB_HOST'] = $host;
     $env['DB_PORT'] = $port;
     $env['DB_NAME'] = $dbname;
     $env['DB_USER'] = $dbuser;
     $env['DB_PASSWORD'] = $dbpassword;
 
-    // Convertit le tableau des variables d'environnement en une chaîne à écrire dans le fichier .env
     $envData = '';
     foreach ($env as $key => $value) {
         $envData .= sprintf("%s=\"%s\"\n", $key, $value);
     }
 
-    // Écrie les données dans le fichier .env
     file_put_contents($envPath, $envData);
 
-    // Crée un nouveau fichier install.lock ou met à jour un existant
     touch('../install.lock');
 
     echo json_encode(['success' => 'La base de données a été configurée avec succès.']);
-
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(['error' => 'Erreur: ' . $e->getMessage()]);
+    echo json_encode(['error' => 'Erreur de base de données: ' . $e->getMessage()]);
+} catch (PathException $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Erreur de chemin du fichier .env: ' . $e->getMessage()]);
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Erreur inattendue: ' . $e->getMessage()]);
 }
