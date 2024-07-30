@@ -18,8 +18,11 @@ footer {
 }
 
 .card {
-    cursor: auto;
     min-height: 85%;
+}
+
+.cursor{
+    cursor: pointer;
 }
 
 .card-container {
