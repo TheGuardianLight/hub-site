@@ -14,16 +14,32 @@
     <p class="text-center">Présence du fichier <code>install.lock</code> détecté !</p>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <div id="install-form" class="container mt-3">
     <h1 class="text-center">Configuration de la base de données</h1>
 
     <form id="database-config-form">
-        <!-- Les champs de formulaire ont été simplifiés pour la lecture -->
         <div class="mb-3">
             <label for="dbname" class="form-label">Nom de la base de données</label>
             <input type="text" class="form-control" id="dbname" required>
         </div>
-        <!-- Plus de champs ici... -->
+        <div class="mb-3">
+            <label for="dbuser" class="form-label">Nom d'utilisateur</label>
+            <input type="text" class="form-control" id="dbuser" required>
+        </div>
+        <div class="mb-3">
+            <label for="dbpassword" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="dbpassword" required>
+        </div>
+        <div class="mb-3">
+            <label for="dbhost" class="form-label">Hôte de la base de données</label>
+            <input type="text" class="form-control" id="dbhost" required>
+        </div>
+        <div class="mb-3">
+            <label for="dbport" class="form-label">Port</label>
+            <input type="number" class="form-control" id="dbport" required>
+        </div>
 
         <button type="submit" class="btn btn-primary">Mettre en place la base de données</button>
     </form>
@@ -32,29 +48,31 @@
     <div id="success-message" class="alert alert-success d-none mt-3"></div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-    const installationForm = document.getElementById('install-form');
-    const installationAlert = document.getElementById('install-alert');
+<script type="text/javascript">
+    const installForm = document.getElementById('install-form');
+    const installAlerte = document.getElementById('install-alert');
 
     $(document).ready(function() {
-        // Performs an AJAX request to check if 'install.lock' file exists
+        // Effectue une requête AJAX pour vérifier si le fichier "install.lock" existe
         $.ajax({
             url: 'install.lock',
             type: 'HEAD',
-            error: function() {
-                // 'install.lock' file does not exist, shows installer
-                installationForm.classList.remove('d-none');
-                installationAlert.classList.add('d-none');
+            error: function()
+            {
+                // Le fichier "install.lock" n'existe pas, affiche 'installateur'
+                installForm.classList.remove('d-none');
+                installAlerte.classList.add('d-none');
             },
-            success: function() {
-                // 'install.lock' file exists, shows 'Installation not allowed!'
-                installationForm.classList.add('d-none');
-                installationAlert.classList.remove('d-none');
+            success: function()
+            {
+                // Le fichier "install.lock" existe, affiche 'Installation non autorisée !'
+                installForm.classList.add('d-none');
+                installAlerte.classList.remove('d-none');
             }
         });
     });
 </script>
+
 <script>
     document.getElementById('database-config-form').addEventListener('submit', function (event) {
         event.preventDefault();
