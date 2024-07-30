@@ -1,5 +1,4 @@
 <?php
-
 global $dbConfig;
 session_start();
 
@@ -15,17 +14,21 @@ require_once 'php/user_management.php';
 $userInfo = getUserInfo($dbConfig, $_SESSION['username']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $password = $_POST['password'];
-
-    updateUserInfo($dbConfig, $_SESSION['username'], $email, $first_name, $last_name, $password);
-    // Update the $userInfo variable after the update so the form displays updated values
+    $updatedInfo = array_intersect_key(
+        $_POST, array_flip(['email', 'first_name', 'last_name', 'password'])
+    );
+    updateUserInfo($dbConfig, $_SESSION['username'], ...array_values($updatedInfo));
     $userInfo = getUserInfo($dbConfig, $_SESSION['username']);
 }
 
-
+$formFields = [
+    'username' => ['Nom d\'utilisateur', 'text', true],
+    'email' => ['Email', 'email'],
+    'first_name' => ['Prénom', 'text'],
+    'last_name' => ['Nom de famille', 'text'],
+    'password' => ['New password', 'password'],
+    'confirm_password' => ['Confirm New password', 'password']
+];
 ?>
 
 <!DOCTYPE html>
@@ -44,39 +47,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php require 'php/menu.php' ?>
 
 <div class="container my-3">
-    <form method="post">
-        <!-- Username -->
-        <div class="mb-3">
-            <label for="username" class="form-label">Nom d'utilisateur</label>
-            <input type="username" class="form-control" id="username" name="username" value="<?php echo $userInfo['username'] ?>" disabled>
+    <form method="post" class="row g-3">
+        <?php foreach ($formFields as $fieldName => $fieldData) :
+            $label = $fieldData[0];
+            $type = $fieldData[1];
+            $disabled = isset($fieldData[2]) ? $fieldData[2] : false;
+            ?>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="<?= $fieldName ?>" class="form-label"><?= $label ?></label>
+                    <input type="<?= $type ?>" class="form-control" id="<?= $fieldName ?>" name="<?= $fieldName ?>"
+                           value="<?= $fieldName === 'password' || $fieldName === 'confirm_password' ? '' : $userInfo[$fieldName] ?>"
+                        <?= $disabled ? 'disabled' : '' ?>>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Mettre à jour</button>
         </div>
-        <!-- Email -->
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" value="<?php echo $userInfo['email'] ?>">
-        </div>
-        <!-- First Name -->
-        <div class="mb-3">
-            <label for="first_name" class="form-label">Prénom</label>
-            <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo $userInfo['first_name'] ?>">
-        </div>
-        <!-- Last Name -->
-        <div class="mb-3">
-            <label for="last_name" class="form-label">Nom de famille</label>
-            <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $userInfo['last_name'] ?>">
-        </div>
-        <!-- Password  -->
-        <div class='mb-3'>
-            <label class="form-label" for='new_password'>New password</label>
-            <input type='password' class="form-control" id='new_password' name='password'>
-        </div>
-        <!-- Confirm Password -->
-        <div class='mb-3'>
-            <label class="form-label" for='confirm_password'>Confirm New password</label>
-            <input type='password' class="form-control" id='confirm_password' name='confirm_password'>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Mettre à jour</button>
     </form>
 </div>
 
