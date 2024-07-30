@@ -51,17 +51,17 @@ while ($row = $resultSites->fetch()) {
     <!-- Tabs -->
     <ul class="nav nav-pills my-4" id="adminTabs" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="categories-tab" data-bs-toggle="pill" data-bs-target="#categories" type="button" role="tab" aria-controls="categories" aria-selected="true">Gérer les catégories</button>
+            <button class="nav-link" id="categories-tab" data-bs-toggle="pill" data-bs-target="#categories" type="button" role="tab" aria-controls="categories">Gérer les catégories</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="sites-tab" data-bs-toggle="pill" data-bs-target="#sites" type="button" role="tab" aria-controls="sites" aria-selected="false">Gérer les sites</button>
+            <button class="nav-link" id="sites-tab" data-bs-toggle="pill" data-bs-target="#sites" type="button" role="tab" aria-controls="sites">Gérer les sites</button>
         </li>
     </ul>
 
     <!-- Tabs content -->
     <div class="tab-content" id="adminTabsContent">
         <!-- Catégories tab -->
-        <div class="tab-pane fade show active" id="categories" role="tabpanel" aria-labelledby="categories-tab">
+        <div class="tab-pane fade" id="categories" role="tabpanel" aria-labelledby="categories-tab">
             <div class="row">
                 <?php foreach($categories as $cat_id => $cat_name): ?>
                     <div class="col-md-4">
@@ -100,7 +100,6 @@ while ($row = $resultSites->fetch()) {
                     <h3 class="card-title">Ajouter un site</h3>
                     <form class="mt-4" method="post" action="php/add_sites.php">
                         <div class="mb-3">
-                            <label for="site_title" class="form-label">Titre du site</label>
                             <input type="text" class="form-control" name="site_title" id="site_title" placeholder="Titre du nouveau site">
                         </div>
                         <div class="mb-3">
@@ -133,19 +132,19 @@ while ($row = $resultSites->fetch()) {
                 <div class="card-body">
                     <h3 class="card-title">Sites existants</h3>
                     <?php foreach($sites as $site): ?>
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h5 class="card-title"><?php echo $site['site_title']; ?></h5>
-                                <p><strong>URL: </strong><?php echo $site['site_url']; ?></p>
-                                <p><strong>Tag: </strong><?php echo $site['site_tag']; ?></p>
-                                <p><strong>Description: </strong><?php echo $site['site_desc']; ?></p>
-                                <p><strong>Catégorie: </strong><?php echo $categories[$site['cat_id']] ?? 'N/A'; ?></p>
-                                <form method='post' action='php/remove_sites.php'>
-                                    <input type='hidden' name='site_id' value='<?php echo $site['site_id']; ?>' />
-                                    <button type='submit' class='btn btn-danger'>Supprimer</button>
-                                </form>
-                            </div>
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $site['site_title']; ?></h5>
+                            <p><strong>URL: </strong><?php echo $site['site_url']; ?></p>
+                            <p><strong>Tag: </strong><?php echo $site['site_tag']; ?></p>
+                            <p><strong>Description: </strong><?php echo $site['site_desc']; ?></p>
+                            <p><strong>Catégorie: </strong><?php echo $categories[$site['cat_id']] ?? 'N/A'; ?></p>
+                            <form method='post' action='php/remove_sites.php'>
+                                <input type='hidden' name='site_id' value='<?php echo $site['site_id']; ?>' />
+                                <button type='submit' class='btn btn-danger'>Supprimer</button>
+                            </form>
                         </div>
+                    </div>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -158,5 +157,33 @@ $conn = null; // fermeture de la connexion à la base de données
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<script>
+    // tab switcher function
+    function switchTab() {
+        const tabs = Array.from(document.querySelectorAll('#adminTabs .nav-link'));
+        const activeTabName = localStorage.getItem('activeTab');
+        const activeTab = tabs.find(tab => tab.id === activeTabName);
+        if (activeTab) {
+            const tab = new bootstrap.Tab(activeTab);
+            tab.show();
+        }
+    }
+
+    // tab click listener
+    const adminTabsEl = document.querySelector('#adminTabs')
+    adminTabsEl.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target.classList.contains('nav-link')) {
+            localStorage.setItem('activeTab', target.id);
+        }
+    });
+
+    // call on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        switchTab();
+    });
+</script>
+
 </body>
 </html>
