@@ -98,10 +98,7 @@
                 .then(text => text ? JSON.parse(text) : {})
         }).then(data => {
             if (data.error) {
-                let message = data.error;
-                if(typeof data.error === "object") {
-                    message = Object.values(data.error).join(" ");
-                }
+                let message = data.details;
                 errorMessageElement.classList.remove('d-none');
                 errorMessageElement.textContent = message;
             } else if (data.success) {
@@ -114,7 +111,7 @@
             }
         }).catch(error => {
             errorMessageElement.classList.remove('d-none');
-            errorMessageElement.textContent = error;
+            errorMessageElement.textContent = "Erreur de connexion au serveur.";
         });
     });
 </script>
