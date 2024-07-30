@@ -2,42 +2,16 @@
 global $dbConfig, $config;
 require 'vendor/autoload.php';
 require 'php/api_config.php';
+require 'php/get_login.php';
 
-// Démarrer une nouvelle session
-session_start();
+function getLoginFormError() {
+    global $message, $messageType;
 
-$message = '';
+    if(empty($message)) return;
 
-// Connexion à la base de donnée
-if(isset($_POST['login'])) {
-    $username = $_POST['email'];
-    $password = $_POST['password'];
-
-    if(!empty($username) && !empty($password)){
-        $connection = getDbConnection($dbConfig);
-        // Check if the entered username/email is present in the database
-        $records = $connection->prepare('SELECT username,email,password FROM users WHERE username = :username OR email = :email');
-        $records->bindParam(':username', $username);
-        $records->bindParam(':email', $username);
-        $records->execute();
-        $results = $records->fetch(PDO::FETCH_ASSOC);
-
-        if($results && password_verify($password, $results['password'])){
-            // Stocker les informations sur l'utilisateur dans la session
-            $_SESSION['username'] = $results['username'];
-            $_SESSION['email'] = $results['email'];
-
-            // Rediriger l'utilisateur vers hub.php
-            header("Location: hub.php");
-        } else {
-            $message = "Erreur : Les informations d'identification ne correspondent pas";
-            $messageType = 'danger';
-        }
-    } else {
-        $message = 'Veuillez remplir les deux champs';
-        $messageType = 'warning';
-    }
+    echo "<div class=\"d-grid gap-2 mt-3 alert alert-$messageType\" role=\"alert\">$message</div>";
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -72,16 +46,10 @@ if(isset($_POST['login'])) {
                         <button type="button" class="btn btn-secondary" onclick="location.href='register.php'">S'inscrire</button>
                     <?php endif; ?>
                 </div>
-
-                <?php if(!empty($message)): ?>
-                    <p class="text-danger"><?= $message ?></p>
-                <?php endif; ?>
+                <?php getLoginFormError(); ?>
             </form>
         </div>
     </div>
 </div>
-<?php if(!empty($message)): ?>
-    <div class="alert alert-<?= $messageType ?>" role="alert"><?= $message ?></div>
-<?php endif; ?>
 </body>
 </html>
