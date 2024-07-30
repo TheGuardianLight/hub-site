@@ -61,7 +61,7 @@ while ($row = $resultCategories->fetch()) {
                     }
                     ?>
                     <div class="col-md-4">
-                        <a class="text-decoration-none text-dark" href="<?php echo $site['site_url']; ?>">
+                        <a class="text-decoration-none text-dark" href="<?php echo $site['site_url']; ?>" hreflang="fr" target="_blank" rel="external">
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $site['site_title']; ?>
