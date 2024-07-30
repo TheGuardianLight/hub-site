@@ -53,7 +53,5 @@ function getLoginFormError() {
     </div>
 </div>
 
-<?php require 'php/footer.php'?>
-
 </body>
 </html>

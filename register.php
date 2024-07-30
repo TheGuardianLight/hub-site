@@ -113,7 +113,5 @@ if(isset($_POST['register'])) {
     </div>
 </div>
 
-<?php require 'php/footer.php'?>
-
 </body>
 </html>
