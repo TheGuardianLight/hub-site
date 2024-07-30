@@ -102,11 +102,12 @@ if(isset($_POST['register'])) {
                     <button type="submit" class="btn btn-primary" name="register">S'inscrire</button>
                 </div>
             </form>
+            <?php if(!empty($message)): ?>
+                <div class="alert alert-<?= $messageType ?>" role="alert"><p class="text-center"><?= $message ?></p></div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
-<?php if(!empty($message)): ?>
-    <div class="alert alert-<?= $messageType ?>" role="alert"><p class="text-center"><?= $message ?></p></div>
-<?php endif; ?>
+
 </body>
 </html>
