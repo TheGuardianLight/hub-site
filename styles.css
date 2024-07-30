@@ -29,3 +29,11 @@ footer {
     display: flex;
     align-items: stretch;
 }
+
+.no-line {
+    border: none;
+}
+
+.table_about {
+    width: 20% !important;
+}

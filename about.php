@@ -23,6 +23,7 @@ $versions = json_decode($json, true);
     <title>About</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link href="styles.css" rel="stylesheet"/>
     <?php require 'php/favicon.php' ?>
 </head>
@@ -41,13 +42,19 @@ $versions = json_decode($json, true);
             <p class="lead">
                 <strong>Versions&nbsp;:</strong>
             </p>
-            <ul class="list-unstyled ml-4">
-                <li class="mb-2"><p>Hub site : <?= $versions['hub_site'] ?></p></li>
-                <li class="mb-2"><p>Bootstrap : <?= $versions['bootstrap'] ?></p></li>
-                <li class="mb-2"><p>jQuery : <?= $versions['jQuery'] ?></p></li>
-            </ul>
+            <table class="table table-striped ml-4 table_about">
+                <?php foreach($versions as $tech => $version): ?>
+                    <tr>
+                        <td><?= ucfirst($tech) ?></td>
+                        <td><?= $version ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
         </div>
     </div>
 </div>
+
+<?php require 'php/footer.php'?>
+
 </body>
 </html>
