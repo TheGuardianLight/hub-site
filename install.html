@@ -17,11 +17,62 @@
 <!-- Votre code HTML ici... -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
+
+<div id="install-form" class="container mt-3">
+    <h1 class="text-center">Configuration de la base de données</h1>
+
+    <form id="database-config-form">
+        <div class="mb-3">
+            <label for="dbname" class="form-label">Nom de la base de données</label>
+            <input type="text" class="form-control" id="dbname" required>
+        </div>
+        <div class="mb-3">
+            <label for="dbuser" class="form-label">Nom d'utilisateur</label>
+            <input type="text" class="form-control" id="dbuser" required>
+        </div>
+        <div class="mb-3">
+            <label for="dbpassword" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="dbpassword" required>
+        </div>
+        <div class="mb-3">
+            <label for="dbhost" class="form-label">Hôte de la base de données</label>
+            <input type="text" class="form-control" id="dbhost" required>
+        </div>
+        <div class="mb-3">
+            <label for="dbport" class="form-label">Port</label>
+            <input type="number" class="form-control" id="dbport" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Mettre en place la base de données</button>
+    </form>
+
+    <div id="error-message" class="alert alert-danger d-none mt-3"></div>
+    <div id="success-message" class="alert alert-success d-none mt-3"></div>
+</div>
+
+<script type="text/javascript">
     const installForm = document.getElementById('install-form');
     const installAlerte = document.getElementById('install-alert');
 
-    // Code pour gérer le fichier install.lock ici...
+    $(document).ready(function() {
+        // Effectue une requête AJAX pour vérifier si le fichier "install.lock" existe
+        $.ajax({
+            url: 'install.lock',
+            type: 'HEAD',
+            error: function()
+            {
+                // Le fichier "install.lock" n'existe pas, affiche 'installateur'
+                installForm.classList.remove('d-none');
+                installAlerte.classList.add('d-none');
+            },
+            success: function()
+            {
+                // Le fichier "install.lock" existe, affiche 'Installation non autorisée !'
+                installForm.classList.add('d-none');
+                installAlerte.classList.remove('d-none');
+            }
+        });
+    });
 </script>
 
 <script>
