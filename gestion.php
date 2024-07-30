@@ -232,7 +232,7 @@ while ($row = $resultSites->fetch()) {
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $site['site_title']; ?></h5>
                                         <p><strong>URL: </strong><?php echo $site['site_url']; ?></p>
-                                        <p><strong>Tag: </strong><?php echo $site['site_tag']; ?></p>
+                                        <p><strong>Tag: </strong><span class="badge bg-info"><?php echo $site['site_tag']; ?></span></p>
                                         <p><strong>Description: </strong><?php echo $site['site_desc']; ?></p>
                                         <p><strong>Catégorie: </strong><?php echo $categories[$site['cat_id']] ?? 'N/A'; ?></p>
                                         <form method='post' action='php/remove_sites.php'>
