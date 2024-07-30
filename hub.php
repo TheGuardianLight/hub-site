@@ -1,5 +1,6 @@
 <?php
 
+global $dbConfig;
 session_start();
 
 if (!isset($_SESSION['username'])) {
@@ -64,7 +65,7 @@ while ($row = $resultCategories->fetch()) {
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $site['site_title']; ?>
-                                        <?php if(isset($site['site_tag']) && !empty($site['site_tag'])): ?>
+                                        <?php if(!empty($site['site_tag'])): ?>
                                             | <span class="badge <?php echo $tagClass ?>"><?php echo $site['site_tag']; ?></span>
                                         <?php endif; ?>
                                     </h5>
