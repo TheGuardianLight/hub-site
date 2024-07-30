@@ -48,7 +48,7 @@ while ($row = $resultCategories->fetch()) {
     <div id="hub-container">
         <?php foreach ($categories as $category): ?>
             <hr/>
-            <h3><?php echo $category['cat_name']; ?></h3>
+            <h3><?php echo $category['cat_name']; ?>&nbsp;:</h3>
             <br/>
             <div class="row card-container">
                 <?php foreach ($category['sites'] as $site): ?>
