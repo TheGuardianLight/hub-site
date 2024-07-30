@@ -12,6 +12,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="account.php">Compte</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.php">A propos</a>
+                </li>
             </ul>
         </div>
         <!-- Ajoutez ce bouton dans votre rôle="menu" -->
