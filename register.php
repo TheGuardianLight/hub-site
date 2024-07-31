@@ -29,7 +29,8 @@ if(isset($_POST['register'])) {
             $stmt = $connection->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':password', password_hash($password, PASSWORD_BCRYPT));
+            $hashedPassword = password_hash($password, PASSWORD_ARGON2ID);
+            $stmt->bindParam(':password', $hashedPassword);
 
             if($stmt->execute()) {
                 $stmt = $connection->prepare("INSERT INTO user_info (username, first_name, last_name, email) VALUES (:username, :firstName, :lastName, :email)");
