@@ -37,3 +37,7 @@ footer {
 .table_about {
     width: 20% !important;
 }
+
+.dropdown:hover>.dropdown-menu {
+    display: block;
+}

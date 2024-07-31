@@ -37,7 +37,7 @@ $versions = json_decode($json, true);
                 <strong>Développeur&nbsp;:</strong> <a class="text-decoration-none" href="https://noaledet.fr" hreflang="fr" rel="external">Noa LEDET</a>
             </p>
             <p class="lead">
-                <strong>Dépôt GitHub&nbsp;:</strong> <a class="text-decoration-none" href="https://github.com/TheGuardianLight/hub-site">link</a>
+                <strong>Problèmes et issues&nbsp;:</strong> <a class="text-decoration-none" href="https://github.com/TheGuardianLight/hub-site/issues">Github</a>
             </p>
             <p class="lead">
                 <strong>Versions&nbsp;:</strong>

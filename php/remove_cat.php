@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql->execute();
         echo "Catégorie supprimée avec succès.";
         // After deletion, redirect back to the manage page
-        header("Location: ../gestion.php");
+        header("Location: ../sites-categories.php");
         exit;
     } catch(PDOException $e) {
         echo "Une erreur s'est produite lors de la suppression : " . $e->getMessage();

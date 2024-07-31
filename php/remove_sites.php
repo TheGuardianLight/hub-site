@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         $sql->execute();
         // Après la suppression, redirigez vers la page de gestion.
-        header("Location: ../gestion.php");
+        header("Location: ../sites-categories.php");
         exit;
     } catch(PDOException $e) {
         echo "Erreur lors de la suppression du site: " . $e->getMessage();

@@ -34,6 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
 
     // Redirection to management page
-    header("Location: ../gestion.php");
+    header("Location: ../sites-categories.php");
 }
 ?>

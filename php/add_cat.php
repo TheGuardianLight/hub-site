@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql->execute();
         echo "Nouvelle catégorie ajoutée avec succès.";
         // Après l'ajout, redirigez vers la page de gestion.
-        header("Location: ../gestion.php");
+        header("Location: ../sites-categories.php");
         exit;
     } catch(PDOException $e) {
         echo "Une erreur s'est produite lors de l'ajout : " . $e->getMessage();
