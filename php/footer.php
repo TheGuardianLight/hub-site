@@ -6,7 +6,7 @@
                     <!-- Empty Column -->
                 </div>
                 <div class="col-sm-4 text-sm-center">
-                    &copy; 2024 Veivneorul. Tous droits réservés.
+                    Copyright &copy; 2024 Veivneorul. BY-NC-ND 4.0
                 </div>
                 <div class="col-sm-4 text-sm-right">
                     <section class="mb-2">
