@@ -18,6 +18,7 @@ $versions = json_decode($json, true);
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>About</title>
@@ -27,8 +28,11 @@ $versions = json_decode($json, true);
     <link href="styles.css" rel="stylesheet"/>
     <?php require 'php/favicon.php' ?>
 </head>
+
 <body>
+
 <?php require 'php/menu.php' ?>
+
 <div class="container mt-5">
     <div class="card">
         <div class="card-body">
