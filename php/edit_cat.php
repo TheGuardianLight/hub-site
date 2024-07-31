@@ -27,4 +27,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Redirection to management page
     header("Location: ../sites-categories.php");
 }
-?>

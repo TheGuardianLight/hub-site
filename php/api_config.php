@@ -16,7 +16,8 @@ $config = [
 ];
 
 // Function to get the database connection
-function getDbConnection($dbConfig) {
+function getDbConnection($dbConfig): PDO
+{
     $dsn = "mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']};port={$dbConfig['port']}";
     $user = $dbConfig['user'];
     $password = $dbConfig['password'];
@@ -29,5 +30,3 @@ function getDbConnection($dbConfig) {
 
     return $connection;
 }
-
-?>

@@ -51,7 +51,7 @@ $formFields = [
         <?php foreach ($formFields as $fieldName => $fieldData) :
             $label = $fieldData[0];
             $type = $fieldData[1];
-            $disabled = isset($fieldData[2]) ? $fieldData[2] : false;
+            $disabled = $fieldData[2] ?? false;
             ?>
             <div class="col-md-6">
                 <div class="mb-3">

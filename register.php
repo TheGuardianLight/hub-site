@@ -7,11 +7,11 @@ $message = '';
 
 // Enregistrement de l'utilisateur
 if(isset($_POST['register'])) {
-    $username = isset($_POST['username']) ? $_POST['username'] : '';
-    $email = isset($_POST['email']) ? $_POST['email'] : '';
-    $password = isset($_POST['password']) ? $_POST['password'] : '';
-    $firstName = isset($_POST['firstName']) ? $_POST['firstName'] : '';
-    $lastName = isset($_POST['lastName']) ? $_POST['lastName'] : '';
+    $username = $_POST['username'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $firstName = $_POST['firstName'] ?? '';
+    $lastName = $_POST['lastName'] ?? '';
 
     if(!empty($username) && !empty($password) && !empty($firstName) && !empty($lastName) && !empty($email)){
         $connection = getDbConnection($dbConfig);
@@ -111,12 +111,41 @@ if(isset($_POST['register'])) {
                     </div>
                 </form>
                 <?php if(!empty($message)): ?>
-                    <div class="alert alert-<?= $messageType ?>" role="alert"><p class="text-center"><?= $message ?></p></div>
+                    <div class="alert alert-<?= $messageTypeMap = [
+                        'success' => 'alert-success',
+                        'danger' => 'alert-danger',
+                        'warning' => 'alert-warning',
+                    ];
+
+                    function aleartDivClass($messageTypeMap, $messageType)
+                    {
+                        if (!isset($messageTypeMap[$messageType])) {
+                            throw new \InvalidArgumentException("Invalid message type: $messageType");
+                        }
+
+                        return $messageTypeMap[$messageType];
+                    }
+
+                    function getLoginFormAlertHtml($messageTypeMap, $messageType)
+                    {
+                        global $message;
+
+                        if (empty($message)) return;
+
+                        $class = aleartDivClass($messageTypeMap, $messageType);
+
+                        return "<div class=\"d-grid gap-2 mt-3 alert $class\" role=\"alert\">$message</div>";
+                    }
+
+                    function printLoginFormAlert($messageTypeMap, $messageType)
+                    {
+                        echo getLoginFormAlertHtml($messageTypeMap, $messageType);
+                    } ?>" role="alert"><p class="text-center"><?= $message ?></p></div>
                 <?php endif; ?>
             </div>
         </div>
     </div>
-<?php elseif ($config['allowSignup'] != "true"): ?>
+<?php else:?>
     <div class="card text-center">
         <div class="card-header bg-danger text-white">
             <h3>Avertissement</h3>

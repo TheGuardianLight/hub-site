@@ -1,5 +1,7 @@
 <?php
 
+use JetBrains\PhpStorm\NoReturn;
+
 require __DIR__ . '/../vendor/autoload.php';
 require 'api_config.php';
 
@@ -24,7 +26,7 @@ if(isset($_POST['import'])){
     importData($filename, $conn);
 }
 
-function exportData($conn)
+function exportData($conn): void
 {
     // Obtention des tables à exporter
     $tables = ['users', 'user_info', 'categorie', 'sites'];
@@ -34,7 +36,7 @@ function exportData($conn)
 
     // Exportation des données de chaque table
     foreach($tables as $table) {
-        $results = $conn->query("SELECT * FROM {$table}");
+        $results = $conn->query("SELECT * FROM $table");
         $all_rows = $results->fetchAll(PDO::FETCH_ASSOC);
         if($all_rows) {
             $exportData[$table] = $all_rows;
@@ -49,14 +51,14 @@ function exportData($conn)
     echo json_encode($exportData);
 }
 
-function importData($filename, $conn)
+#[NoReturn] function importData($filename, $conn): void
 {
     // Importe les données à partir d'un fichier JSON
     $importData = json_decode(file_get_contents($filename), true);
     foreach($importData as $table => $rows) {
-        $result = $conn->query("SHOW COLUMNS FROM {$table}");
+        $result = $conn->query("SHOW COLUMNS FROM $table");
         if ($result === false) {
-            die("Erreur lors de l'exécution de la requête SQL pour la table '{$table}' : " . print_r($conn->errorInfo(), true));
+            die("Erreur lors de l'exécution de la requête SQL pour la table '$table' : " . print_r($conn->errorInfo(), true));
         }
         // Récupérer les noms des colonnes directement depuis la structure de la table
         $columns = $result->fetchAll(PDO::FETCH_COLUMN);
@@ -75,5 +77,3 @@ function importData($filename, $conn)
     header("Location: ../data.php?success=1");
     exit();
 }
-
-?>
