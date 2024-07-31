@@ -115,9 +115,17 @@ if(isset($_POST['register'])) {
             </div>
         </div>
     </div>
-<?php elseif ($config['allowSignup'] /= "true"): ?>
-    <div class="alert alert-danger" role="alert">
-        Inscription interdite
+<?php elseif ($config['allowSignup'] != "true"): ?>
+    <div class="card text-center">
+        <div class="card-header bg-danger text-white">
+            <h3>Avertissement</h3>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Erreur !</h4>
+                <p>Inscription interdite.</p>
+            </div>
+        </div>
     </div>
 <?php endif; ?>
 
