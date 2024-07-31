@@ -1,4 +1,8 @@
 <?php
+/*
+ * Copyright (c) 2024 - Veivneorul. This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (BY-NC-ND 4.0).
+ */
+
 function getUser($connection, $username) {
     $stmt = $connection->prepare('SELECT username,email,password FROM users WHERE username = :username OR email = :email');
     $stmt->bindParam(':username', $username);
