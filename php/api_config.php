@@ -21,7 +21,7 @@ function getDbConnection($dbConfig): PDO
     $dsn = "mysql:host={$dbConfig['host']};dbname={$dbConfig['dbname']};port={$dbConfig['port']}";
     $user = $dbConfig['user'];
     $password = $dbConfig['password'];
-
+    $connection = "";
     try {
         $connection = new PDO($dsn, $user, $password);
     } catch (PDOException $exception) {
