@@ -1,5 +1,5 @@
 <?php
-global $dbConfig;
+global $dbConfig, $config;
 require 'vendor/autoload.php';
 require 'php/api_config.php';
 
@@ -62,6 +62,7 @@ if(isset($_POST['register'])) {
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -71,47 +72,55 @@ if(isset($_POST['register'])) {
     <link href="styles.css" rel="stylesheet"/>
     <?php require 'php/favicon.php' ?>
 </head>
+
 <body>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-5">
-            <h2 class="text-center my-4">Inscription</h2>
-            <form action="register.php" method="POST">
-                <div class="form-group">
-                    <label for="username">Nom d'utilisateur</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Nom d'utilisateur">
-                </div>
+<?php if ($config['allowSignup'] == "true"): ?>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <h2 class="text-center my-4">Inscription</h2>
+                <form action="register.php" method="POST">
+                    <div class="form-group">
+                        <label for="username">Nom d'utilisateur</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Nom d'utilisateur">
+                    </div>
 
-                <div class="form-group mt-2">
-                    <label for="firstName">Prénom</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Prénom">
-                </div>
+                    <div class="form-group mt-2">
+                        <label for="firstName">Prénom</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Prénom">
+                    </div>
 
-                <div class="form-group mt-2">
-                    <label for="lastName">Nom</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Nom">
-                </div>
+                    <div class="form-group mt-2">
+                        <label for="lastName">Nom</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Nom">
+                    </div>
 
-                <div class="form-group mt-2">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-                </div>
+                    <div class="form-group mt-2">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                    </div>
 
-                <div class="form-group mt-2">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
-                </div>
+                    <div class="form-group mt-2">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
+                    </div>
 
-                <div class="d-grid gap-2 mt-3">
-                    <button type="submit" class="btn btn-primary" name="register">S'inscrire</button>
-                </div>
-            </form>
-            <?php if(!empty($message)): ?>
-                <div class="alert alert-<?= $messageType ?>" role="alert"><p class="text-center"><?= $message ?></p></div>
-            <?php endif; ?>
+                    <div class="d-grid gap-2 mt-3">
+                        <button type="submit" class="btn btn-primary" name="register">S'inscrire</button>
+                    </div>
+                </form>
+                <?php if(!empty($message)): ?>
+                    <div class="alert alert-<?= $messageType ?>" role="alert"><p class="text-center"><?= $message ?></p></div>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
-</div>
+<?php elseif ($config['allowSignup'] /= "true"): ?>
+    <div class="alert alert-danger" role="alert">
+        Inscription interdite
+    </div>
+<?php endif; ?>
 
 </body>
+
 </html>
