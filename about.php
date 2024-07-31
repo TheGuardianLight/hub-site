@@ -34,10 +34,10 @@ $versions = json_decode($json, true);
         <div class="card-body">
             <h1 class="text-center mb-4">A propos :</h1>
             <p class="lead">
-                <strong>Développeur&nbsp;:</strong> <a class="text-decoration-none" href="https://noaledet.fr" hreflang="fr" rel="external">Noa LEDET</a>
+                <strong>Développeur&nbsp;:</strong> <a class="text-decoration-none" href="https://noaledet.fr" hreflang="fr" rel="external" target="_blank">Noa LEDET</a>
             </p>
             <p class="lead">
-                <strong>Problèmes et issues&nbsp;:</strong> <a class="text-decoration-none" href="https://github.com/TheGuardianLight/hub-site/issues">Github</a>
+                <strong>Problèmes et issues&nbsp;:</strong> <a class="text-decoration-none" href="https://github.com/TheGuardianLight/hub-site/issues" target="_blank">Github</a>
             </p>
             <p class="lead">
                 <strong>Versions&nbsp;:</strong>
