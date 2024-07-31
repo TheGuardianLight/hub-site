@@ -16,13 +16,13 @@ Cet outil n'as qu'un seul but : Lister des sites qui vous appartiennent afin d'a
 
 En plus des options actuellement implémenté tels que :
 
-- L'authentification.
-- La création d'un compte utilisateur.
-- La possibilité de se déconnecter.
-- La modification d'informations tels que le nom, prénom, email et mot de passe.
-- La création et gestion des catégories et des sites.
-- L'importation de données.
-- L'exportation de données.
+- [x] L'authentification.
+- [x] La création d'un compte utilisateur.
+- [x] La possibilité de se déconnecter.
+- [x] La modification d'informations tels que le nom, prénom, email et mot de passe.
+- [x] La création et gestion des catégories et des sites.
+- [x] L'importation de données.
+- [x] L'exportation de données.
 
 J'ai prévu d'y ajouter d'autres fonctions :
 
