@@ -21,6 +21,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="about.php">A propos</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="doc/">Documentation</a>
+                </li>
             </ul>
         </div>
         <!-- Ajoutez ce bouton dans votre rôle="menu" -->
