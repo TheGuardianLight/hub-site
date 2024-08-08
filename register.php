@@ -10,14 +10,14 @@ require 'php/api_config.php';
 $message = '';
 
 // Enregistrement de l'utilisateur
-if(isset($_POST['register'])) {
+if (isset($_POST['register'])) {
     $username = $_POST['username'] ?? '';
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
     $firstName = $_POST['firstName'] ?? '';
     $lastName = $_POST['lastName'] ?? '';
 
-    if(!empty($username) && !empty($password) && !empty($firstName) && !empty($lastName) && !empty($email)){
+    if (!empty($username) && !empty($password) && !empty($firstName) && !empty($lastName) && !empty($email)) {
         $connection = getDbConnection($dbConfig);
 
         // Check if the user already exists
@@ -27,7 +27,7 @@ if(isset($_POST['register'])) {
         $records->execute();
         $results = $records->fetch(PDO::FETCH_ASSOC);
 
-        if(!empty($results)){
+        if (!empty($results)) {
             $message = "Erreur : Utilisateur déjà existant";
         } else {
             $stmt = $connection->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
@@ -36,13 +36,13 @@ if(isset($_POST['register'])) {
             $hashedPassword = password_hash($password, PASSWORD_ARGON2ID);
             $stmt->bindParam(':password', $hashedPassword);
 
-            if($stmt->execute()) {
+            if ($stmt->execute()) {
                 $stmt = $connection->prepare("INSERT INTO user_info (username, first_name, last_name, email) VALUES (:username, :firstName, :lastName, :email)");
                 $stmt->bindParam(':username', $username);
                 $stmt->bindParam(':firstName', $firstName);
                 $stmt->bindParam(':lastName', $lastName);
                 $stmt->bindParam(':email', $email);
-                if($stmt->execute()){
+                if ($stmt->execute()) {
                     $message = 'Nouvel utilisateur créé avec succès. Vous allez être redirigé vers la page de connexion.';
                     $messageType = 'success';
 
@@ -72,7 +72,8 @@ if(isset($_POST['register'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inscription</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link href="styles.css" rel="stylesheet"/>
     <?php require 'php/favicon.php' ?>
@@ -87,7 +88,8 @@ if(isset($_POST['register'])) {
                 <form action="register.php" method="POST">
                     <div class="form-group">
                         <label for="username">Nom d'utilisateur</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Nom d'utilisateur">
+                        <input type="text" class="form-control" id="username" name="username"
+                               placeholder="Nom d'utilisateur">
                     </div>
 
                     <div class="form-group mt-2">
@@ -107,14 +109,15 @@ if(isset($_POST['register'])) {
 
                     <div class="form-group mt-2">
                         <label for="password">Mot de passe</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
+                        <input type="password" class="form-control" id="password" name="password"
+                               placeholder="Mot de passe">
                     </div>
 
                     <div class="d-grid gap-2 mt-3">
                         <button type="submit" class="btn btn-primary" name="register">S'inscrire</button>
                     </div>
                 </form>
-                <?php if(!empty($message)): ?>
+                <?php if (!empty($message)): ?>
                     <div class="alert alert-<?= $messageTypeMap = [
                         'success' => 'alert-success',
                         'danger' => 'alert-danger',
@@ -149,7 +152,7 @@ if(isset($_POST['register'])) {
             </div>
         </div>
     </div>
-<?php else:?>
+<?php else: ?>
     <div class="card text-center">
         <div class="card-header bg-danger text-white">
             <h3>Avertissement</h3>

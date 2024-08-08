@@ -4,7 +4,8 @@
  */
 
 require __DIR__ . '/../vendor/autoload.php';
-function getUserInfo($dbConfig, $username){
+function getUserInfo($dbConfig, $username)
+{
     $connection = getDbConnection($dbConfig);
 
     $query = "SELECT * FROM users LEFT JOIN user_info ON users.username = user_info.username WHERE users.username=?";
@@ -15,7 +16,8 @@ function getUserInfo($dbConfig, $username){
     return $userInfo;
 }
 
-function updateUserInfo($dbConfig, $username, $email, $first_name, $last_name, $password){
+function updateUserInfo($dbConfig, $username, $email, $first_name, $last_name, $password)
+{
     $connection = getDbConnection($dbConfig);
     $password = password_hash($password, PASSWORD_BCRYPT);
 

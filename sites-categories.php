@@ -95,18 +95,21 @@ while ($row = $resultSites->fetch()) {
                     <form class="mt-3 row" method="post" action="php/edit_cat.php">
                         <!-- Select pour choisir la catégorie à modifier -->
                         <div class="mb-3 col-md-6">
-                            <label for="edit_cat_id" class="form-label h5 mb-3 border-bottom pb-1 border-primary">Choisir la catégorie</label>
+                            <label for="edit_cat_id" class="form-label h5 mb-3 border-bottom pb-1 border-primary">Choisir
+                                la catégorie</label>
                             <select name="cat_id" id="edit_cat_id" class="form-control">
                                 <option value="">Sélectionner une catégorie</option>
-                                <?php foreach($categories as $cat_id => $cat_name): ?>
+                                <?php foreach ($categories as $cat_id => $cat_name): ?>
                                     <option value="<?php echo $cat_id; ?>"><?php echo $cat_name; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <!-- Input pour entrer le nouveau nom -->
                         <div class="mb-3 col-md-6">
-                            <label for="new_cat_name" class="form-label h5 mb-3 border-bottom pb-1 border-danger">Nouveau nom</label>
-                            <input type="text" class="form-control" name="new_cat_name" id="new_cat_name" placeholder="Nouveau nom de la catégorie">
+                            <label for="new_cat_name" class="form-label h5 mb-3 border-bottom pb-1 border-danger">Nouveau
+                                nom</label>
+                            <input type="text" class="form-control" name="new_cat_name" id="new_cat_name"
+                                   placeholder="Nouveau nom de la catégorie">
                         </div>
                         <div class="col-12 mt-3">
                             <button type="submit" class="btn btn-primary">Modifier la catégorie</button>
@@ -238,11 +241,15 @@ while ($row = $resultSites->fetch()) {
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $site['site_title']; ?></h5>
                                         <p><strong>URL: </strong><?php echo $site['site_url']; ?></p>
-                                        <p><strong>Tag: </strong><span class="badge bg-info"><?php echo $site['site_tag']; ?></span></p>
+                                        <p><strong>Tag: </strong><span
+                                                    class="badge bg-info"><?php echo $site['site_tag']; ?></span></p>
                                         <p><strong>Description: </strong><?php echo $site['site_desc']; ?></p>
-                                        <p><strong>Catégorie: </strong><?php echo $categories[$site['cat_id']] ?? 'N/A'; ?></p>
+                                        <p>
+                                            <strong>Catégorie: </strong><?php echo $categories[$site['cat_id']] ?? 'N/A'; ?>
+                                        </p>
                                         <form method='post' action='php/remove_sites.php'>
-                                            <input type='hidden' name='site_id' value='<?php echo $site['site_id']; ?>'/>
+                                            <input type='hidden' name='site_id'
+                                                   value='<?php echo $site['site_id']; ?>'/>
                                             <button type='submit' class='btn btn-danger'>Supprimer</button>
                                         </form>
                                     </div>
@@ -311,7 +318,7 @@ $conn = null; // fermeture de la connexion à la base de données
     });
 </script>
 
-<?php require 'php/footer.php'?>
+<?php require 'php/footer.php' ?>
 
 </body>
 </html>

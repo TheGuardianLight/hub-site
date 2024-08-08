@@ -58,19 +58,17 @@
     const installForm = document.getElementById('install-form');
     const installAlerte = document.getElementById('install-alert');
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Effectue une requête AJAX pour vérifier si le fichier "install.lock" existe
         $.ajax({
             url: 'install.lock',
             type: 'HEAD',
-            error: function()
-            {
+            error: function () {
                 // Le fichier "install.lock" n'existe pas, affiche 'installateur'
                 installForm.classList.remove('d-none');
                 installAlerte.classList.add('d-none');
             },
-            success: function()
-            {
+            success: function () {
                 // Le fichier "install.lock" existe, affiche 'Installation non autorisée !'
                 installForm.classList.add('d-none');
                 installAlerte.classList.remove('d-none');
@@ -109,7 +107,7 @@
                 successMessageElement.classList.remove('d-none');
                 successMessageElement.textContent = data.success;
 
-                setTimeout(function() {
+                setTimeout(function () {
                     window.location.href = "login.php";
                 }, 5000);
             }

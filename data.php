@@ -119,7 +119,7 @@ $conn = null; // fermeture de la connexion à la base de données
     });
 </script>
 
-<?php require 'php/footer.php';?>
+<?php require 'php/footer.php'; ?>
 
 </body>
 </html>

@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Après l'ajout, redirigez vers la page de gestion.
         header("Location: /sites-categories.php");
         exit;
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         echo "Une erreur s'est produite lors de l'ajout du site: " . $e->getMessage();
     }
 

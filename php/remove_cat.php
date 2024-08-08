@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // After deletion, redirect back to the manage page
         header("Location: ../sites-categories.php");
         exit;
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         echo "Une erreur s'est produite lors de la suppression : " . $e->getMessage();
     }
 

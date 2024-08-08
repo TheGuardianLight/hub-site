@@ -10,7 +10,8 @@ C'est ce qui as donné ce projet.
 
 ## Utilisation :
 
-Cet outil n'as qu'un seul but : Lister des sites qui vous appartiennent afin d'avoir une meilleure vision des sites que vous hébergez.
+Cet outil n'as qu'un seul but : Lister des sites qui vous appartiennent afin d'avoir une meilleure vision des sites que
+vous hébergez.
 
 ## Choses prévu :
 
@@ -32,4 +33,5 @@ J'ai prévu d'y ajouter d'autres fonctions :
 
 ## Des problèmes ? Des idées d'améliorations ?
 
-Si vous avez d'autres idées, vous pouvez vous rendre [ici](https://github.com/TheGuardianLight/hub-site/issues) pour faire part de vos problèmes liés au logiciels ou d'éventuels idée d'amélioration.
+Si vous avez d'autres idées, vous pouvez vous rendre [ici](https://github.com/TheGuardianLight/hub-site/issues) pour
+faire part de vos problèmes liés au logiciels ou d'éventuels idée d'amélioration.

@@ -39,7 +39,8 @@ while ($row = $resultCategories->fetch()) {
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Mon Hub</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link href="styles.css" rel="stylesheet"/>
     <?php require 'php/favicon.php' ?>
@@ -67,11 +68,12 @@ while ($row = $resultCategories->fetch()) {
                     }
                     ?>
                     <div class="col-md-4">
-                        <a class="text-decoration-none text-dark" href="<?php echo $site['site_url']; ?>" hreflang="fr" target="_blank" rel="external">
+                        <a class="text-decoration-none text-dark" href="<?php echo $site['site_url']; ?>" hreflang="fr"
+                           target="_blank" rel="external">
                             <div class="card mb-4 cursor">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $site['site_title']; ?>
-                                        <?php if(!empty($site['site_tag'])): ?>
+                                        <?php if (!empty($site['site_tag'])): ?>
                                             | <span class="badge <?php if (isset($tagClass)) {
                                                 echo $tagClass;
                                             } ?>"><?php echo $site['site_tag']; ?></span>
@@ -88,7 +90,7 @@ while ($row = $resultCategories->fetch()) {
     </div>
 </main>
 
-<?php require 'php/footer.php'?>
+<?php require 'php/footer.php' ?>
 
 </body>
 </html>

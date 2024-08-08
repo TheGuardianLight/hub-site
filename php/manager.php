@@ -14,11 +14,11 @@ global $dbConfig;
 // Obtention de la connexion à la base de données
 $conn = getDbConnection($dbConfig);
 
-if(isset($_POST['export'])){
+if (isset($_POST['export'])) {
     exportData($conn);
 }
 
-if(isset($_POST['import'])){
+if (isset($_POST['import'])) {
     // Vérifiez que le fichier a bien été chargé
     if (!isset($_FILES['file']['tmp_name'])) {
         die('Aucun fichier n a été chargé');
@@ -38,10 +38,10 @@ function exportData($conn): void
     $exportData = [];
 
     // Exportation des données de chaque table
-    foreach($tables as $table) {
+    foreach ($tables as $table) {
         $results = $conn->query("SELECT * FROM $table");
         $all_rows = $results->fetchAll(PDO::FETCH_ASSOC);
-        if($all_rows) {
+        if ($all_rows) {
             $exportData[$table] = $all_rows;
         }
     }
@@ -58,14 +58,14 @@ function exportData($conn): void
 {
     // Importe les données à partir d'un fichier JSON
     $importData = json_decode(file_get_contents($filename), true);
-    foreach($importData as $table => $rows) {
+    foreach ($importData as $table => $rows) {
         $result = $conn->query("SHOW COLUMNS FROM $table");
         if ($result === false) {
             die("Erreur lors de l'exécution de la requête SQL pour la table '$table' : " . print_r($conn->errorInfo(), true));
         }
         // Récupérer les noms des colonnes directement depuis la structure de la table
         $columns = $result->fetchAll(PDO::FETCH_COLUMN);
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
             $values = array_values($row);
             $sql = sprintf(
                 "INSERT INTO %s (%s) values (%s)",

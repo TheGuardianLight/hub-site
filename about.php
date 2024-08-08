@@ -42,16 +42,19 @@ $versions = json_decode($json, true);
         <div class="card-body">
             <h1 class="text-center mb-4">A propos :</h1>
             <p class="lead">
-                <strong>Développeur&nbsp;:</strong> <a class="text-decoration-none" href="https://noaledet.fr" hreflang="fr" rel="external" target="_blank">Noa LEDET</a>
+                <strong>Développeur&nbsp;:</strong> <a class="text-decoration-none" href="https://noaledet.fr"
+                                                       hreflang="fr" rel="external" target="_blank">Noa LEDET</a>
             </p>
             <p class="lead">
-                <strong>Problèmes et issues&nbsp;:</strong> <a class="text-decoration-none" href="https://github.com/TheGuardianLight/hub-site/issues" target="_blank">Github</a>
+                <strong>Problèmes et issues&nbsp;:</strong> <a class="text-decoration-none"
+                                                               href="https://github.com/TheGuardianLight/hub-site/issues"
+                                                               target="_blank">Github</a>
             </p>
             <p class="lead">
                 <strong>Versions&nbsp;:</strong>
             </p>
             <table class="table table-striped ml-4 table_about">
-                <?php foreach($versions as $tech => $version): ?>
+                <?php foreach ($versions as $tech => $version): ?>
                     <tr>
                         <td><?= ucfirst($tech) ?></td>
                         <td><?= $version ?></td>
@@ -62,7 +65,7 @@ $versions = json_decode($json, true);
     </div>
 </div>
 
-<?php require 'php/footer.php'?>
+<?php require 'php/footer.php' ?>
 
 </body>
 </html>

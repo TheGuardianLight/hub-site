@@ -3,7 +3,6 @@
  */
 
 
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -21,7 +20,7 @@ main {
     min-height: 85%;
 }
 
-.cursor{
+.cursor {
     cursor: pointer;
 }
 
@@ -38,6 +37,6 @@ main {
     width: 20% !important;
 }
 
-.dropdown:hover>.dropdown-menu {
+.dropdown:hover > .dropdown-menu {
     display: block;
 }
