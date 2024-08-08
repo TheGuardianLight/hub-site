@@ -260,6 +260,8 @@ while ($row = $resultSites->fetch()) {
 $conn = null; // fermeture de la connexion à la base de données
 ?>
 
+<?php require 'js/bootstrap_script.html' ?>
+
 <script>
     // Initialiser les données des sites
     var sites = <?php echo json_encode($sites); ?>;

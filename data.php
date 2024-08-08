@@ -90,6 +90,8 @@ if (isset($_GET['success']) && $_GET['success'] === '1') {
 $conn = null; // fermeture de la connexion à la base de données
 ?>
 
+<?php require 'js/bootstrap_script.html' ?>
+
 <script>
     // tab switcher function
     function switchTab() {
