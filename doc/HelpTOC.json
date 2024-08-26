@@ -1,16 +1,1 @@
-{
-  "entities": {
-    "pages": {
-      "Requirement": {
-        "id": "Requirement",
-        "title": "Requirement",
-        "url": "requirement.html",
-        "level": 0,
-        "tabIndex": 0
-      }
-    }
-  },
-  "topLevelIds": [
-    "Requirement"
-  ]
-}
+{"entities":{"pages":{"Requirement":{"id":"Requirement","title":"Requirement","url":"requirement.html","level":0,"tabIndex":0}}},"topLevelIds":["Requirement"]}
