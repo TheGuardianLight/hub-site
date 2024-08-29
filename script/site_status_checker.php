@@ -42,7 +42,7 @@ function sendErrorEmail(array $errors): void {
 
         // Configurer le destinataire
         $mail->setFrom($_ENV['MAIL_FROM_ADDRESS'], $_ENV['MAIL_FROM_NAME']);
-        $mail->addAddress('veivneorul@neodraco.fr');
+        $mail->addAddress('webmaster@neodraco.fr');
 
         // Configurer le contenu de l'email
         $mail->isHTML(false);
