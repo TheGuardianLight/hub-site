@@ -10,6 +10,9 @@ global $dbConfig;
 require '../vendor/autoload.php';
 require '../php/api_config.php';
 
+// Obtenir la date et l'heure actuelles au début du script
+$startTime = date('Y-m-d H:i:s');
+
 /**
  * Fetch all sites from the database.
  *
@@ -106,7 +109,7 @@ try {
         echo "Site " . $site['site_url'] . " testé avec le code http " . $response['httpCode'] . "\n";
     }
 
-    echo "Les statuts des sites ont été mis à jour avec succès.\n";
+    echo "Les statuts des sites ont été mis à jour avec succès le " . $startTime . ".\n";
 
 } catch (Exception $e) {
     echo 'Connection error: ', $e->getMessage(), "\n";
