@@ -61,10 +61,19 @@ while ($row = $resultCategories->fetch()) {
             <div class="row card-container">
                 <?php foreach ($category['sites'] as $site): ?>
                     <?php
-                    if ($site['site_tag'] == 'En ligne') {
-                        $tagClass = 'bg-success';
-                    } elseif ($site['site_tag'] == 'Indisponible') {
-                        $tagClass = 'bg-danger';
+                    switch (true) {
+                        case $site['site_tag'] === 'En ligne':
+                            $tagClass = 'bg-success';
+                            break;
+                        case $site['site_tag'] === 'Erreur DNS':
+                        case str_starts_with($site['site_tag'], 'Erreur client'):
+                        case str_starts_with($site['site_tag'], 'Erreur serveur'):
+                        case str_starts_with($site['site_tag'], 'Inaccessible'):
+                            $tagClass = 'bg-danger';
+                            break;
+                        default:
+                            $tagClass = 'bg-warning'; // Utilisez cette classe pour les cas non prévus
+                            break;
                     }
                     ?>
                     <div class="col-md-4">

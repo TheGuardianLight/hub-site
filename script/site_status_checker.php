@@ -6,12 +6,64 @@
 
 declare(strict_types=1);
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
+
 global $dbConfig;
 require '../vendor/autoload.php';
 require '../php/api_config.php';
 
+// Charger les variables d'environnement
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
 // Obtenir la date et l'heure actuelles au début du script
 $startTime = date('Y-m-d H:i:s');
+
+/**
+ * Fonction pour envoyer un email avec PHPMailer
+ *
+ * @param array $errors
+ * @return void
+ */
+function sendErrorEmail(array $errors): void {
+    $mail = new PHPMailer(true);
+
+    try {
+        // Configurer le serveur SMTP
+        $mail->isSMTP();
+        $mail->Host = $_ENV['MAIL_HOST'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['MAIL_USERNAME'];
+        $mail->Password = $_ENV['MAIL_PASSWORD'];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = $_ENV['MAIL_PORT'];
+
+        // Configurer le destinataire
+        $mail->setFrom($_ENV['MAIL_FROM_ADDRESS'], $_ENV['MAIL_FROM_NAME']);
+        $mail->addAddress('veivneorul@neodraco.fr');
+
+        // Configurer le contenu de l'email
+        $mail->isHTML(false);
+        $mail->Subject = 'Problèmes détectés lors de la vérification des sites';
+        $mail->CharSet = 'UTF-8';
+
+        $body = "Des erreurs ont été rencontrées lors de la vérification des sites:\n\n";
+        foreach ($errors as $error) {
+            $body .= "Site: " . utf8_encode($error['site_url']) . "\n";
+            $body .= "Erreur: " . utf8_encode($error['error_message']) . "\n";
+            $body .= "-------\n";
+        }
+        $mail->Body = $body;
+
+        // Envoyer l'email
+        $mail->send();
+        echo 'Email envoyé avec succès.';
+    } catch (Exception $e) {
+        echo "Erreur: L'envoi de l'email a échoué. Mailer Error: {$mail->ErrorInfo}";
+    }
+}
 
 /**
  * Fetch all sites from the database.
@@ -82,38 +134,63 @@ function checkUrl(string $url): array {
  * @param int $errorCode
  * @return string
  */
-function getSiteTagFromHttpResponse(int $httpCode, int $errorCode): string {
+
+function getSiteTagFromHttpResponse(int $httpCode, int $errorCode): array {
+    $dnsError = false;
+    $siteTag = '';
+
     if ($errorCode === CURLE_COULDNT_RESOLVE_HOST) {
-        return 'Erreur DNS';
-    }
-    if ($httpCode >= 200 && $httpCode <= 302) {
-        return 'En ligne';
+        $dnsError = true;
+        $siteTag = 'Erreur DNS';
+    } elseif ($httpCode >= 200 && $httpCode <= 302) {
+        $siteTag = 'En ligne';
     } elseif ($httpCode >= 400 && $httpCode < 500) {
-        return 'Erreur client ' . $httpCode;
+        $siteTag = 'Erreur client ' . $httpCode;
     } elseif ($httpCode >= 500 && $httpCode < 600) {
-        return 'Erreur serveur ' . $httpCode;
+        $siteTag = 'Erreur serveur ' . $httpCode;
     } else {
-        return 'Inaccessible ' . $httpCode;
+        $siteTag = 'Inaccessible ' . $httpCode;
     }
+
+    return ['siteTag' => $siteTag, 'dnsError' => $dnsError];
 }
 
 try {
     $connection = getDbConnection($dbConfig);
     $sites = getSites($connection);
+    $errors = [];
 
     foreach ($sites as $site) {
         echo "Test du site : " . $site['site_url'] . "\n";
-        $response = checkUrl($site['site_url']); // Utilisation de la clé correcte ici
-        $siteTag = getSiteTagFromHttpResponse($response['httpCode'], $response['errorCode']);
+        $response = checkUrl($site['site_url']);
+        $result = getSiteTagFromHttpResponse($response['httpCode'], $response['errorCode']);
+        $siteTag = $result['siteTag'];
+        $dnsError = $result['dnsError'];
+
         updateSiteTag($connection, (int)$site['site_id'], $siteTag);
         echo "Site " . $site['site_url'] . " testé avec le code http " . $response['httpCode'] . "\n";
+
+        // Collecte les erreurs HTTP 400-599
+        if (($response['httpCode'] >= 400 && $response['httpCode'] < 600) || $dnsError) {
+            $errors[] = [
+                'site_url' => $site['site_url'],
+                'error_message' => $siteTag,
+            ];
+            echo "Erreur collectée pour le site " . $site['site_url'] . " : " . $siteTag . "\n";
+        }
     }
 
-    echo "Les statuts des sites ont été mis à jour avec succès le " . $startTime . ".\n";
+    echo "Les statuts des sites ont été mis à jour avec succès.\n";
+
+    // Envoie un e-mail si des erreurs sont collectées
+    if (!empty($errors)) {
+        echo "Envoi de l'email avec les erreurs collectées.\n";
+        sendErrorEmail($errors);
+    }
 
 } catch (Exception $e) {
     echo 'Connection error: ', $e->getMessage(), "\n";
 } finally {
     $connection = null; // Assurez-vous de fermer la connexion
 }
-?>
+?>;
