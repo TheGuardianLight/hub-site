@@ -37,26 +37,38 @@ function getLoginFormError()
         <div class="col-lg-5">
             <h2 class="text-center my-4">Connexion</h2>
             <form action="login.php" method="POST">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                <?php if (isset($loginError)) : ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <?php echo htmlentities($loginError); ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
+                <div class="form-group mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                    </div>
                 </div>
 
-                <div class="form-group mt-2">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" class="form-control" id="password" name="password"
-                           placeholder="Mot de passe">
+                <div class="form-group mb-3">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon2"><i class="bi bi-lock-fill"></i></span>
+                        <input type="password" class="form-control" id="password" name="password"
+                               placeholder="Mot de passe" required>
+                    </div>
                 </div>
 
-                <div class="d-grid gap-2 mt-3">
-                    <button type="submit" class="btn btn-primary" name="login">Se connecter</button>
+                <div class="d-flex justify-content-between gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary w-50" name="login">Se connecter</button>
                     <?php if ($config['allowSignup'] == "true"): ?>
-                        <button type="button" class="btn btn-secondary" onclick="location.href='register.php'">
+                        <button type="button" class="btn btn-secondary w-50" onclick="location.href='register.php'">
                             S'inscrire
                         </button>
                     <?php endif; ?>
                 </div>
-                <?php getLoginFormError(); ?>
             </form>
         </div>
     </div>
