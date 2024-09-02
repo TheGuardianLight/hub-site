@@ -54,48 +54,71 @@ while ($row = $resultCategories->fetch()) {
 </header>
 <main class="container my-5">
     <div id="hub-container">
-        <?php foreach ($categories as $category): ?>
-            <hr/>
-            <h3><?php echo $category['cat_name']; ?>&nbsp;:</h3>
-            <br/>
-            <div class="row card-container">
-                <?php foreach ($category['sites'] as $site): ?>
-                    <?php
-                    switch (true) {
-                        case $site['site_tag'] === 'En ligne':
-                            $tagClass = 'bg-success';
-                            break;
-                        case $site['site_tag'] === 'Erreur DNS':
-                        case str_starts_with($site['site_tag'], 'Erreur client'):
-                        case str_starts_with($site['site_tag'], 'Erreur serveur'):
-                        case str_starts_with($site['site_tag'], 'Inaccessible'):
-                            $tagClass = 'bg-danger';
-                            break;
-                        default:
-                            $tagClass = 'bg-warning'; // Utilisez cette classe pour les cas non prévus
-                            break;
-                    }
-                    ?>
-                    <div class="col-md-4">
-                        <a class="text-decoration-none text-dark" href="<?php echo $site['site_url']; ?>" hreflang="fr"
-                           target="_blank" rel="external">
-                            <div class="card mb-4 cursor">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?php echo $site['site_title']; ?>
-                                        <?php if (!empty($site['site_tag'])): ?>
-                                            | <span class="badge <?php if (isset($tagClass)) {
-                                                echo $tagClass;
-                                            } ?>"><?php echo $site['site_tag']; ?></span>
-                                        <?php endif; ?>
-                                    </h5>
-                                    <p class="card-text"><?php echo $site['site_desc']; ?></p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                <?php endforeach; ?>
+        <?php if (empty($categories)): ?>
+            <div class="alert alert-info" role="alert">
+                Aucune catégorie enregistrée.
             </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
+
+        <?php
+        $noSites = true;
+        if (!empty($categories)):
+            foreach ($categories as $category):
+                if (!empty($category['sites'])) {
+                    $noSites = false;
+                    break;
+                }
+            endforeach;
+        endif;
+        ?>
+
+        <?php if ($noSites): ?>
+            <div class="alert alert-info" role="alert">
+                Aucun site enregistré.
+            </div>
+        <?php endif; ?>
+
+        <?php if (!empty($categories)): ?>
+            <?php foreach ($categories as $category): ?>
+                <hr/>
+                <h3><?php echo $category['cat_name']; ?>&nbsp;:</h3>
+                <br/>
+                <div class="row card-container">
+                    <?php foreach ($category['sites'] as $site): ?>
+                        <?php
+                        switch (true) {
+                            case $site['site_tag'] === 'En ligne':
+                                $tagClass = 'bg-success';
+                                break;
+                            case $site['site_tag'] === 'Erreur DNS':
+                            case str_starts_with($site['site_tag'], 'Erreur client'):
+                            case str_starts_with($site['site_tag'], 'Erreur serveur'):
+                            case str_starts_with($site['site_tag'], 'Inaccessible'):
+                                $tagClass = 'bg-danger';
+                                break;
+                            default:
+                                $tagClass = 'bg-warning'; // Utilisez cette classe pour les cas non prévus
+                                break;
+                        }
+                        ?>
+                        <div class="col-md-4">
+                            <a class="text-decoration-none text-dark" href="<?php echo $site['site_url']; ?>" hreflang="fr" target="_blank" rel="external">
+                                <div class="card mb-4 cursor">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $site['site_title']; ?>
+                                            <?php if (!empty($site['site_tag'])): ?>
+                                                | <span class="badge <?php if (isset($tagClass)) { echo $tagClass; } ?>"><?php echo $site['site_tag']; ?></span>
+                                            <?php endif; ?>
+                                        </h5>
+                                        <p class="card-text"><?php echo $site['site_desc']; ?></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 </main>
 
